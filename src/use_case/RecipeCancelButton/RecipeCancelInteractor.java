@@ -1,8 +1,5 @@
-package use_case.recipecancel;
+package use_case.RecipeCancelButton;
 
-
-import interface_adapter.RecipeCancel.RecipeCancelPresenter;
-import interface_adapter.RecipeSearchButton.RecipeSearchPresenter;
 
 public class RecipeCancelInteractor implements RecipeCancelInputBoundary{
     private final RecipeCancelOutputBoundary presenter;

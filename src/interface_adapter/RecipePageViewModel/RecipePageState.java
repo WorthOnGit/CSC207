@@ -1,20 +1,20 @@
-package interface_adapter.recipepage;
+package interface_adapter.RecipePageViewModel;
 
 public class RecipePageState {
     private String recipename = "";
     private String recipenameError = null;
     private String countryoforigin = "";
     private String countryoforiginError = null;
-    private String portions = "";
-    private String portionsError = null;
+    private int CalorieLimit = 0;
+    private String CalorieLimitError = null;
 
     public RecipePageState(RecipePageState copy) {
         recipename = copy.recipename;
         recipenameError = copy.recipenameError;
         countryoforigin = copy.countryoforigin;
         countryoforiginError = copy.countryoforiginError;
-        portions = copy.portions;
-        portionsError = copy.portionsError;
+        CalorieLimit = copy.CalorieLimit;
+        CalorieLimitError = copy.CalorieLimitError;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
@@ -37,12 +37,12 @@ public class RecipePageState {
         return countryoforiginError;
     }
 
-    public String getPortions() {
-        return portions;
+    public int getCalories() {
+        return CalorieLimit;
     }
 
-    public String getPortionsError() {
-        return portionsError;
+    public String getCaloriesError() {
+        return CalorieLimitError;
     }
 
     public void setRecipename(String recipename) {
@@ -61,12 +61,12 @@ public class RecipePageState {
         this.countryoforiginError = countryoforiginError;
     }
 
-    public void setPortions(String portions) {
-        this.portions = portions;
+    public void setCalories(int calorieLimit) {
+        this.CalorieLimit = CalorieLimit;
     }
 
-    public void setPortionsError(String portionsError) {
-        this.portionsError = portionsError;
+    public void setCalorieLimitError(String portionsError) {
+        this.CalorieLimitError = CalorieLimitError;
     }
 
     @Override
@@ -74,7 +74,8 @@ public class RecipePageState {
         return "RecipeSearch{" +
                 "Recipe Name='" + recipename + '\'' +
                 ", Country Of Origin='" + countryoforigin + '\'' +
-                ", number of portions='" + portions + '\'' +
+                ", number of portions='" + CalorieLimit + '\'' +
                 '}';
     }
 }
+

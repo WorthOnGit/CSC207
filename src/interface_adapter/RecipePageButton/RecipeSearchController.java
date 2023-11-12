@@ -1,5 +1,5 @@
-package interface_adapter.RecipeSearchButton;
-import use_case.RecipeSearchButton.RecipeSearchInputBoundary;
+package interface_adapter.RecipePageButton;
+import use_case.RecipePageButton.RecipeSearchInputBoundary;
 
 public class RecipeSearchController {
 

@@ -1,4 +1,4 @@
-package interface_adapter.recipepage;
+package interface_adapter.RecipePageViewModel;
 
 import interface_adapter.ViewModel;
 
@@ -9,11 +9,11 @@ public class RecipePageViewModel extends ViewModel {
 
     public static final String TITLE_LABEL = "Find a Recipe";
     public static final String RECIPE_NAME_LABEL = "Recipe Name (ie. Chicken Parmesan)";
-    public static final String COUNTRY_OF_ORIGIN_LABEL = "Country Of Origin (ie. Italy)";
-    public static final String PORTIONS_LABEL = "Enter Portions (ie. 4)";
+    public static final String COUSINE_TYPE_LABEL = "Cuisine Type";
+    public static final String CALORIES_LABEL = "Calorie Limit (< 3000)";
 
     public static final String SEARCH_BUTTON_LABEL = "Search";
-    public static final String CANCEL_BUTTON_LABEL = "Cancel";
+    public static final String Done_BUTTON_LABEL = "Done";
 
     private RecipePageState state = new RecipePageState();
 

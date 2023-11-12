@@ -1,5 +1,5 @@
-package interface_adapter.RecipeCancel;
-import use_case.recipecancel.RecipeCancelInputBoundary;
+package interface_adapter.RecipeCancelButton;
+import use_case.RecipeCancelButton.RecipeCancelInputBoundary;
 
 public class RecipeCancelController {
 

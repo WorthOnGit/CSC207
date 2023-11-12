@@ -1,6 +1,6 @@
 package view;
 
-import interface_adapter.RecipeSearchButton.RecipeSearchController;
+import interface_adapter.RecipePageButton.RecipeSearchController;
 import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.StartPage.StartPageState;
 
@@ -22,7 +22,7 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
     private final JButton calorie_count;
 
 
-    public StartPageView(StartPageViewModel signupViewModel, interface_adapter.RecipeSearchButton.RecipeSearchController recipeSearchController) {
+    public StartPageView(StartPageViewModel signupViewModel, interface_adapter.RecipePageButton.RecipeSearchController recipeSearchController) {
         this.StartPageViewModel = signupViewModel;
         this.RecipeSearchController = recipeSearchController;
         signupViewModel.addPropertyChangeListener(this);

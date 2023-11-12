@@ -1,6 +1,6 @@
 package app;
 
-import interface_adapter.recipepage.RecipePageViewModel;
+import interface_adapter.RecipePageViewModel.RecipePageViewModel;
 import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.ViewManagerModel;
 import view.RecipePageView;
@@ -20,7 +20,6 @@ public class Main {
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
-
         // The various View objects. Only one view is visible at a time.
         JPanel views = new JPanel(cardLayout);
         application.add(views);

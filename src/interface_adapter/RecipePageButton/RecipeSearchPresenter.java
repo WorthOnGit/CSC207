@@ -1,8 +1,8 @@
-package interface_adapter.RecipeSearchButton;
+package interface_adapter.RecipePageButton;
 
-import use_case.RecipeSearchButton.RecipeSearchOutputBoundary;
+import use_case.RecipePageButton.RecipeSearchOutputBoundary;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.recipepage.RecipePageViewModel;
+import interface_adapter.RecipePageViewModel.RecipePageViewModel;
 
 public class RecipeSearchPresenter implements RecipeSearchOutputBoundary {
 

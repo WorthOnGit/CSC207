@@ -1,9 +1,10 @@
-package use_case;
+package DataAccess;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import entity.Recipe;
+import use_case.DataAccessInterface;
 
 import java.io.IOException;
 import java.net.URI;

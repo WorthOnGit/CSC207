@@ -2,13 +2,13 @@ package app;
 
 import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.*;
-import interface_adapter.recipepage.RecipePageViewModel;
-import use_case.RecipeSearchButton.RecipeSeachInteractor;
-import use_case.RecipeSearchButton.RecipeSearchInputBoundary;
-import use_case.RecipeSearchButton.RecipeSearchOutputBoundary;
+import interface_adapter.RecipePageViewModel.RecipePageViewModel;
+import use_case.RecipePageButton.RecipeSeachInteractor;
+import use_case.RecipePageButton.RecipeSearchInputBoundary;
+import use_case.RecipePageButton.RecipeSearchOutputBoundary;
 import view.StartPageView;
-import interface_adapter.RecipeSearchButton.RecipeSearchController;
-import interface_adapter.RecipeSearchButton.RecipeSearchPresenter;
+import interface_adapter.RecipePageButton.RecipeSearchController;
+import interface_adapter.RecipePageButton.RecipeSearchPresenter;
 public class StartPageUseCaseFactory {
 
     /** Prevent instantiation. */

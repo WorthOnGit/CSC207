@@ -1,19 +1,14 @@
 package app;
 
 
-import interface_adapter.RecipeCancel.*;
+import interface_adapter.RecipeCancelButton.*;
 
-import interface_adapter.RecipeSearchButton.RecipeSearchController;
-import interface_adapter.RecipeSearchButton.RecipeSearchPresenter;
 import interface_adapter.StartPage.StartPageViewModel;
-import interface_adapter.recipepage.RecipePageViewModel;
+import interface_adapter.RecipePageViewModel.RecipePageViewModel;
 import interface_adapter.*;
-import use_case.RecipeSearchButton.RecipeSeachInteractor;
-import use_case.RecipeSearchButton.RecipeSearchInputBoundary;
-import use_case.RecipeSearchButton.RecipeSearchOutputBoundary;
-import use_case.recipecancel.RecipeCancelInputBoundary;
-import use_case.recipecancel.RecipeCancelInteractor;
-import use_case.recipecancel.RecipeCancelOutputBoundary;
+import use_case.RecipeCancelButton.RecipeCancelInputBoundary;
+import use_case.RecipeCancelButton.RecipeCancelInteractor;
+import use_case.RecipeCancelButton.RecipeCancelOutputBoundary;
 import view.RecipePageView;
 
 

@@ -1,4 +1,4 @@
-package use_case.RecipeSearchButton;
+package use_case.RecipePageButton;
 
 public class RecipeSeachInteractor implements RecipeSearchInputBoundary {
 
