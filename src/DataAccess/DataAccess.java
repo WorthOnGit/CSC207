@@ -22,6 +22,9 @@ public class DataAccess implements DataAccessInterface {
 //    }
 
     public Recipe getRecipe(String recipename, String countryoforigin) {
+
+        recipename = recipename.replace(" ", "%");
+        countryoforigin = countryoforigin.replace(" ", "%");
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.edamam.com/api/recipes/v2?type=public&q=" + recipename + "&app_id=46fc17af&app_key=de222735d9046e67f7dff62e54ff616f" + countryoforigin))
                 .header("app_id", "46fc17af")
