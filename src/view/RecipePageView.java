@@ -2,7 +2,7 @@ package view;
 
 import interface_adapter.RecipePageViewModel.RecipePageState;
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
-import interface_adapter.RecipeCancelButton.RecipeCancelController;
+import interface_adapter.RecipeCancelButton.RecipeDoneController;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -20,24 +20,24 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
 
     private final RecipePageViewModel recipePageViewModel;
 
-    private final RecipeCancelController recipeDoneController;
-    private final JTextField recipenameInputField = new JTextField(15);
+    private final RecipeDoneController recipeDoneController;
+    final JTextField recipenameInputField = new JTextField(15);
     private final JButton search;
     private final JButton Done;
-    private final JSlider caloriesSlider;
+    final JSlider caloriesSlider;
 
     // Use JComboBox for cuisine types
-    private final JComboBox<String> cuisineTypeComboBox;
+    final JComboBox<String> cuisineTypeComboBox;
 
     // JLabel to display the exact value of the slider
     private final JLabel caloriesValueLabel = new JLabel("Calories: 0");
 
-    public RecipePageView(RecipePageViewModel recipePageViewModel, RecipeCancelController recipeDoneController) {
+    public RecipePageView(RecipePageViewModel recipePageViewModel, RecipeDoneController recipeDoneController) {
 
         this.recipeDoneController = recipeDoneController;
 
         this.recipePageViewModel = recipePageViewModel;
-        recipePageViewModel.addPropertyChangeListener(this);
+        this.recipePageViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(RecipePageViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -131,6 +131,7 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
         this.add(buttons);
     }
 
+
     public void actionPerformed(ActionEvent evt) {
         JOptionPane.showConfirmDialog(this, "Cancel not implemented yet.");
     }
@@ -138,8 +139,16 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         RecipePageState state = (RecipePageState) evt.getNewValue();
-        if (state.getRecipenameError() != null) {
-            JOptionPane.showMessageDialog(this, state.getRecipenameError());
-        }
+        setFields(state);
     }
+
+    private void setFields(RecipePageState state) {
+        recipenameInputField.setText(state.getRecipename());
+        caloriesSlider.setValue(state.getCalories());
+    }
+
+
+
+
+
 }

@@ -6,9 +6,9 @@ import interface_adapter.RecipeCancelButton.*;
 import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
 import interface_adapter.*;
-import use_case.RecipeCancelButton.RecipeCancelInputBoundary;
-import use_case.RecipeCancelButton.RecipeCancelInteractor;
-import use_case.RecipeCancelButton.RecipeCancelOutputBoundary;
+import use_case.RecipeCancelButton.RecipeDoneInputBoundary;
+import use_case.RecipeCancelButton.RecipeDoneInteractor;
+import use_case.RecipeCancelButton.RecipeDoneOutputBoundary;
 import view.RecipePageView;
 
 
@@ -20,19 +20,19 @@ public class RecipeSearchUseCaseFactory {
     public static RecipePageView create(
             ViewManagerModel viewManagerModel, RecipePageViewModel recipePageViewModel, StartPageViewModel startpageViewModel) {
 
-        RecipeCancelController controller = createcontroller(viewManagerModel, startpageViewModel);
+        RecipeDoneController controller = createcontroller(viewManagerModel, startpageViewModel, recipePageViewModel);
 
         return new RecipePageView(recipePageViewModel, controller);
 
     }
 
-    private static RecipeCancelController createcontroller(ViewManagerModel viewManagerModel, StartPageViewModel startpageViewModel) {
+    private static RecipeDoneController createcontroller(ViewManagerModel viewManagerModel, StartPageViewModel startpageViewModel, RecipePageViewModel recipePageViewModel) {
 
-        RecipeCancelOutputBoundary recipecancelPresenter = new RecipeCancelPresenter(viewManagerModel, startpageViewModel);
+        RecipeDoneOutputBoundary recipecancelPresenter = new RecipeDonePresenter(viewManagerModel, startpageViewModel);
 
-        RecipeCancelInputBoundary recipecancelusecaseinteractor = new RecipeCancelInteractor(recipecancelPresenter);
+        RecipeDoneInputBoundary recipecancelusecaseinteractor = new RecipeDoneInteractor(recipecancelPresenter, recipePageViewModel, recipePageViewModel);
 
-        return new RecipeCancelController(recipecancelusecaseinteractor);
+        return new RecipeDoneController(recipecancelusecaseinteractor);
 
 
     }

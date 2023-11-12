@@ -1,5 +1,5 @@
 package use_case.RecipeCancelButton;
 
-public interface RecipeCancelOutputBoundary {
+public interface RecipeDoneOutputBoundary {
     void present();
 }

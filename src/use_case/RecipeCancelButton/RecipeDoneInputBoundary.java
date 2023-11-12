@@ -1,6 +1,6 @@
 package use_case.RecipeCancelButton;
 
-public interface RecipeCancelInputBoundary {
+public interface RecipeDoneInputBoundary {
     void execute();
 
 }
