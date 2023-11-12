@@ -1,0 +1,15 @@
+package use_case.RecipeSearchButton;
+
+public class RecipeSeachInteractor implements RecipeSearchInputBoundary {
+
+    private final RecipeSearchOutputBoundary recipeSearchPresenter;
+
+    public RecipeSeachInteractor(RecipeSearchOutputBoundary recipeSearchPresenter) {
+        this.recipeSearchPresenter = recipeSearchPresenter;
+    }
+
+    @Override
+    public void execute() {
+        recipeSearchPresenter.present();
+    }
+}
