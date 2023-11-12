@@ -29,6 +29,9 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
     // Use JComboBox for cuisine types
     private final JComboBox<String> cuisineTypeComboBox;
 
+    // JLabel to display the exact value of the slider
+    private final JLabel caloriesValueLabel = new JLabel("Calories: 0");
+
     public RecipePageView(RecipePageViewModel recipePageViewModel, RecipeCancelController recipeDoneController) {
 
         this.recipeDoneController = recipeDoneController;
@@ -58,7 +61,7 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
                 new JLabel(RecipePageViewModel.COUSINE_TYPE_LABEL), cuisineTypeComboBox);
 
         LabelSliderPanel caloriesinfo = new LabelSliderPanel(
-                new JLabel(RecipePageViewModel.CALORIES_LABEL), caloriesSlider);
+                caloriesValueLabel, caloriesSlider);
 
         JPanel buttons = new JPanel();
         search = new JButton(RecipePageViewModel.SEARCH_BUTTON_LABEL);
@@ -87,13 +90,17 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
             }
         });
 
-        // Add a ChangeListener to update the value in the RecipePageState
+        // Add a ChangeListener to update the value in the RecipePageState and the JLabel
         caloriesSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 RecipePageState currentState = recipePageViewModel.getState();
-                currentState.setCalories(caloriesSlider.getValue());
+                int caloriesValue = caloriesSlider.getValue();
+                currentState.setCalories(caloriesValue);
                 recipePageViewModel.setState(currentState);
+
+                // Update the JLabel to display the exact value
+                caloriesValueLabel.setText("Calories: " + caloriesValue);
             }
         });
 
@@ -136,5 +143,3 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
         }
     }
 }
-
-
