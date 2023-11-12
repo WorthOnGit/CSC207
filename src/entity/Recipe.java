@@ -1,6 +1,5 @@
 package entity;
 
-import com.google.gson.JsonArray;
 
 import java.util.HashMap;
 
