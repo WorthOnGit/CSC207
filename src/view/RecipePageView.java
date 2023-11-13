@@ -71,7 +71,7 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
 
 
         // Create JComboBox for cuisine types
-        String[] cuisineTypes = {"American", "Asian", "British", "Caribbean", "Central European", "Chinese",
+        String[] cuisineTypes = {"any", "American", "Asian", "British", "Caribbean", "Central European", "Chinese",
                 "Eastern European", "French", "Greek", "Indian", "Italian", "Japanese", "Korean", "Kosher",
                 "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "South American", "Southeast Asian", "World"};
 
@@ -82,7 +82,7 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
 
 
         // Create JComboBox for cuisine types
-        String[] MealTypes = {"lunch/dinner", "brunch", "breakfast", "snack"};
+        String[] MealTypes = {"any", "lunch", "dinner", "brunch", "breakfast", "snack"};
 
         MealTypeComboBox = new JComboBox<>(MealTypes);
         LabelComboBoxPanel mealtypeinfo = new LabelComboBoxPanel(
