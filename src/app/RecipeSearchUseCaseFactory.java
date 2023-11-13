@@ -6,9 +6,9 @@ import interface_adapter.RecipeCancelButton.*;
 import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
 import interface_adapter.*;
-import use_case.RecipeCancelButton.RecipeDoneInputBoundary;
-import use_case.RecipeCancelButton.RecipeDoneInteractor;
-import use_case.RecipeCancelButton.RecipeDoneOutputBoundary;
+import use_case.RecipeDoneButton.RecipeDoneInputBoundary;
+import use_case.RecipeDoneButton.RecipeDoneInteractor;
+import use_case.RecipeDoneButton.RecipeDoneOutputBoundary;
 import view.RecipePageView;
 
 

@@ -1,4 +1,4 @@
-package use_case.RecipeCancelButton;
+package use_case.RecipeDoneButton;
 
 public interface RecipeDoneInputBoundary {
     void execute();

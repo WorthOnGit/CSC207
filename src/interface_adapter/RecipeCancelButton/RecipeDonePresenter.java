@@ -1,9 +1,8 @@
 package interface_adapter.RecipeCancelButton;
 
-import interface_adapter.RecipePageViewModel.RecipePageViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.StartPage.StartPageViewModel;
-import use_case.RecipeCancelButton.RecipeDoneOutputBoundary;
+import use_case.RecipeDoneButton.RecipeDoneOutputBoundary;
 
 public class RecipeDonePresenter implements RecipeDoneOutputBoundary {
 
