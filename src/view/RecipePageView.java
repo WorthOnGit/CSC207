@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class RecipePageView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -24,6 +25,7 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
     private final RecipeDoneController recipeDoneController;
     private final JTextField recipenameInputField = new JTextField(15);
     private final JButton search;
+    private final JButton clear;
     private final JButton Done;
     private final JSlider caloriesSlider;
 
@@ -124,6 +126,8 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
         JPanel buttons = new JPanel();
         search = new JButton(RecipePageViewModel.SEARCH_BUTTON_LABEL);
         buttons.add(search);
+        clear = new JButton("Clear");
+        buttons.add(clear);
         Done = new JButton(RecipePageViewModel.Done_BUTTON_LABEL);
         buttons.add(Done);
 
@@ -145,6 +149,27 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
                 }
             }
         });
+
+
+        clear.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                if (evt.getSource().equals(clear)) {
+                    RecipePageState currentState = recipePageViewModel.getState();
+                    currentState.setRecipename("");
+                    currentState.setCalories(0);
+                    currentState.setCountryoforigin("any");
+                    currentState.setmealtype("any");
+                    currentState.setDietLabels(new ArrayList<>());
+
+                    recipePageViewModel.setState(currentState);
+                    recipePageViewModel.firePropertyChanged();
+
+                    // Continue with your existing code...
+                }
+            }
+        });
+
+
 
 
 
