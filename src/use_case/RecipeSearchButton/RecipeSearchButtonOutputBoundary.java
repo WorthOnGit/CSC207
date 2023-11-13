@@ -1,7 +1,11 @@
 package use_case.RecipeSearchButton;
 
-public interface RecipeSearchButtonOutputBoundary {
-    void presentrecipe();
+import entity.Recipe;
 
-    void presentfailed();
+public interface RecipeSearchButtonOutputBoundary {
+    void presentrecipe(Recipe recipe);
+
+    void presentnoinputfail();
+
+    void presentnoresultfail();
 }

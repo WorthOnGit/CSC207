@@ -31,7 +31,7 @@ public class Main {
         StartPageViewModel startPageViewModel = new StartPageViewModel();
         RecipePageViewModel recipePageViewModel = new RecipePageViewModel();
 
-        RecipePageView recipePageView = RecipeSearchUseCaseFactory.create(viewManagerModel, recipePageViewModel, startPageViewModel);
+        RecipePageView recipePageView = RecipeSearchUseCaseFactory.create(viewManagerModel, recipePageViewModel, startPageViewModel, application);
         views.add(recipePageView, recipePageView.viewName);
 
         StartPageView startPageView = StartPageUseCaseFactory.create(viewManagerModel, startPageViewModel, recipePageViewModel);

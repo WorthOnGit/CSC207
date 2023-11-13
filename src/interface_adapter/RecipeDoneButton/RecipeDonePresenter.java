@@ -1,4 +1,4 @@
-package interface_adapter.RecipeCancelButton;
+package interface_adapter.RecipeDoneButton;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.StartPage.StartPageViewModel;
