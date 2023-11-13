@@ -1,4 +1,4 @@
-package interface_adapter.RecipeCancelButton;
+package interface_adapter.RecipeDoneButton;
 import use_case.RecipeDoneButton.RecipeDoneInputBoundary;
 
 public class RecipeDoneController {

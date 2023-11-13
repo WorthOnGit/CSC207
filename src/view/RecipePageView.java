@@ -2,7 +2,8 @@ package view;
 
 import interface_adapter.RecipePageViewModel.RecipePageState;
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
-import interface_adapter.RecipeCancelButton.RecipeDoneController;
+import interface_adapter.RecipeDoneButton.RecipeDoneController;
+import interface_adapter.RecipeSearchButtonController;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -23,6 +24,7 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
     private final RecipePageViewModel recipePageViewModel;
 
     private final RecipeDoneController recipeDoneController;
+    private final RecipeSearchButtonController recipeSearchButtonController;
     private final JTextField recipenameInputField = new JTextField(15);
     private final JButton search;
     private final JButton clear;
@@ -45,10 +47,11 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
     // JLabel to display selected diet labels
     private final JLabel selectedDietLabelsLabel = new JLabel();
 
-    public RecipePageView(RecipePageViewModel recipePageViewModel, RecipeDoneController recipeDoneController) {
+    public RecipePageView(RecipePageViewModel recipePageViewModel, RecipeDoneController recipeDoneController, RecipeSearchButtonController recipeSearchButtonController) {
         this.recipeDoneController = recipeDoneController;
         this.recipePageViewModel = recipePageViewModel;
         this.recipePageViewModel.addPropertyChangeListener(this);
+        this.recipeSearchButtonController = recipeSearchButtonController;
 
         JLabel title = new JLabel(RecipePageViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -73,9 +76,9 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
 
 
         // Create JComboBox for cuisine types
-        String[] cuisineTypes = {"any", "American", "Asian", "British", "Caribbean", "Central European", "Chinese",
+        String[] cuisineTypes = {"World", "American", "Asian", "British", "Caribbean", "Central European", "Chinese",
                 "Eastern European", "French", "Greek", "Indian", "Italian", "Japanese", "Korean", "Kosher",
-                "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "South American", "Southeast Asian", "World"};
+                "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "South American", "Southeast Asian"};
 
         cuisineTypeComboBox = new JComboBox<>(cuisineTypes);
         LabelComboBoxPanel countryoforigininfo = new LabelComboBoxPanel(
@@ -139,13 +142,12 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
         search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(search)) {
-                    RecipePageState currentState = recipePageViewModel.getState();
-                    // Access the calories, cuisine type, and diet label values and use them as needed
-                    int calories = currentState.getCalories();
-                    String cuisineType = (String) cuisineTypeComboBox.getSelectedItem();
-                    String[] selectedDietLabels = dietLabelList.getSelectedValuesList().toArray(new String[0]);
-
-                    // Continue with your existing code...
+                    recipeSearchButtonController.execute(recipePageViewModel.getState().getRecipename(),
+                            recipePageViewModel.getState().getCountryoforigin(),
+                            recipePageViewModel.getState().getCalories(),
+                            recipePageViewModel.getState().getDietLabels(),
+                            recipePageViewModel.getState().getHealthLabels(),
+                            recipePageViewModel.getState().getmealtype());
                 }
             }
         });
@@ -157,7 +159,7 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
                     RecipePageState currentState = recipePageViewModel.getState();
                     currentState.setRecipename("");
                     currentState.setCalories(0);
-                    currentState.setCountryoforigin("any");
+                    currentState.setCountryoforigin("World");
                     currentState.setmealtype("any");
                     currentState.setDietLabels(new ArrayList<>());
 
