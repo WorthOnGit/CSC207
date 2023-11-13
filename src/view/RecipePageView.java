@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 
 public class RecipePageView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "Recipe Search View";
@@ -21,26 +22,35 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
     private final RecipePageViewModel recipePageViewModel;
 
     private final RecipeDoneController recipeDoneController;
-    final JTextField recipenameInputField = new JTextField(15);
+    private final JTextField recipenameInputField = new JTextField(15);
     private final JButton search;
     private final JButton Done;
-    final JSlider caloriesSlider;
+    private final JSlider caloriesSlider;
 
     // Use JComboBox for cuisine types
-    final JComboBox<String> cuisineTypeComboBox;
+    private final JComboBox<String> cuisineTypeComboBox;
+
+    // JList for diet labels
+    private final JList<String> dietLabelList;
 
     // JLabel to display the exact value of the slider
     private final JLabel caloriesValueLabel = new JLabel("Calories: 0");
 
+    // JLabel to display selected diet labels
+    private final JLabel selectedDietLabelsLabel = new JLabel();
+
     public RecipePageView(RecipePageViewModel recipePageViewModel, RecipeDoneController recipeDoneController) {
-
         this.recipeDoneController = recipeDoneController;
-
         this.recipePageViewModel = recipePageViewModel;
         this.recipePageViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(RecipePageViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
+
+
+
 
         // Create a JSlider for calories
         caloriesSlider = new JSlider(JSlider.HORIZONTAL, 0, 3000, 0);
@@ -51,6 +61,11 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
         LabelTextPanel recipenameinfo = new LabelTextPanel(
                 new JLabel(RecipePageViewModel.RECIPE_NAME_LABEL), recipenameInputField);
 
+        LabelSliderPanel caloriesinfo = new LabelSliderPanel(
+                caloriesValueLabel, caloriesSlider);
+
+
+
         // Create JComboBox for cuisine types
         String[] cuisineTypes = {"American", "Asian", "British", "Caribbean", "Central European", "Chinese",
                 "Eastern European", "French", "Greek", "Indian", "Italian", "Japanese", "Korean", "Kosher",
@@ -60,8 +75,24 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
         LabelComboBoxPanel countryoforigininfo = new LabelComboBoxPanel(
                 new JLabel(RecipePageViewModel.COUSINE_TYPE_LABEL), cuisineTypeComboBox);
 
-        LabelSliderPanel caloriesinfo = new LabelSliderPanel(
-                caloriesValueLabel, caloriesSlider);
+
+
+
+
+        // Create a JList for diet labels
+        String[] dietLabels = {"Balanced", "High-Fiber", "High-Protein", "Low-Carb", "Low-Fat", "Low-Sodium"};
+        dietLabelList = new JList<>(dietLabels);
+        dietLabelList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        // Create a JScrollPane for the diet label list
+        JScrollPane dietLabelScrollPane = new JScrollPane(dietLabelList);
+
+
+
+
+
+
+
 
         JPanel buttons = new JPanel();
         search = new JButton(RecipePageViewModel.SEARCH_BUTTON_LABEL);
@@ -69,17 +100,45 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
         Done = new JButton(RecipePageViewModel.Done_BUTTON_LABEL);
         buttons.add(Done);
 
+
+
+
+
+
         search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(search)) {
                     RecipePageState currentState = recipePageViewModel.getState();
-                    // Access the calories and cuisine type values and use them as needed
+                    // Access the calories, cuisine type, and diet label values and use them as needed
                     int calories = currentState.getCalories();
                     String cuisineType = (String) cuisineTypeComboBox.getSelectedItem();
+                    String[] selectedDietLabels = dietLabelList.getSelectedValuesList().toArray(new String[0]);
 
                     // Continue with your existing code...
                 }
             }
+        });
+
+
+
+        cuisineTypeComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RecipePageState currentState = recipePageViewModel.getState();
+                currentState.setCountryoforigin((String) cuisineTypeComboBox.getSelectedItem());
+                recipePageViewModel.setState(currentState);
+            }
+        });
+
+        // Add a ListSelectionListener to update the value in the RecipePageState when dietLabelList is changed
+        dietLabelList.addListSelectionListener(e -> {
+            RecipePageState currentState = recipePageViewModel.getState();
+            currentState.setDietLabels(dietLabelList.getSelectedValuesList());
+            System.out.println(dietLabelList.getSelectedValuesList());
+            recipePageViewModel.setState(currentState);
+            // Update the label to display the selected diet labels
+            selectedDietLabelsLabel.setText("Selected Diet Labels: " + Arrays.toString(dietLabelList.getSelectedValuesList().toArray()));
+
         });
 
         Done.addActionListener(new ActionListener() {
@@ -127,9 +186,14 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
         this.add(title);
         this.add(recipenameinfo);
         this.add(countryoforigininfo);
+        this.add(new LabelScrollPanePanel(new JLabel("Diet Label"), dietLabelScrollPane));
+        this.add(selectedDietLabelsLabel); // Add the label directly to the panel
         this.add(caloriesinfo);
         this.add(buttons);
     }
+
+
+
 
 
     public void actionPerformed(ActionEvent evt) {
@@ -145,10 +209,7 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
     private void setFields(RecipePageState state) {
         recipenameInputField.setText(state.getRecipename());
         caloriesSlider.setValue(state.getCalories());
+        cuisineTypeComboBox.setSelectedItem(state.getCountryoforigin());
+        dietLabelList.setSelectedIndices(new int[0]);
     }
-
-
-
-
-
 }

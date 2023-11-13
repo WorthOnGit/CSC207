@@ -1,8 +1,10 @@
-package use_case.RecipeCancelButton;
+package use_case.RecipeDoneButton;
 
 
 import interface_adapter.RecipePageViewModel.RecipePageState;
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
+
+import java.util.ArrayList;
 
 public class RecipeDoneInteractor implements RecipeDoneInputBoundary {
     private final RecipeDoneOutputBoundary presenter;
@@ -18,6 +20,9 @@ public class RecipeDoneInteractor implements RecipeDoneInputBoundary {
         RecipePageState currentState = this.recipePageViewModel.getState();
         currentState.setRecipename("");
         currentState.setCalories(0);
+        currentState.setCountryoforigin("American");
+        currentState.setDietLabels(new ArrayList<>());
+
         this.recipePageViewModel.setState(currentState);
         this.recipePageViewModel.firePropertyChanged();
 

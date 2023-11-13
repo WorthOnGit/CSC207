@@ -14,14 +14,8 @@ import java.net.http.HttpResponse;
 import java.util.HashMap;
 
 public class DataAccess implements DataAccessInterface {
-//    public static void main(String[] args) throws IOException {
-//        RecipeInfo recipeInfo = getRecipeInfo("YourRecipeName", "YourCountryOfOrigin");
-//        System.out.println("Recipe Name: " + recipeInfo.getRecipeName());
-//        System.out.println("Ingredient Lines:");
-//        recipeInfo.printIngredientLines();
-//    }
 
-    public Recipe getRecipe(String recipename, String countryoforigin) {
+    public Recipe getRecipe(String recipename, String countryoforigin, int Calories) {
 
         recipename = recipename.replace(" ", "%");
         countryoforigin = countryoforigin.replace(" ", "%");

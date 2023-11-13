@@ -1,23 +1,27 @@
 package interface_adapter.RecipePageViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RecipePageState {
     private String recipename = "";
     private String recipenameError = null;
     private String countryoforigin = "";
     private String countryoforiginError = null;
-    private int CalorieLimit = 0;
-    private String CalorieLimitError = null;
+    private int calories = 0;
+    private String caloriesError = null;
+    private List<String> dietLabels = new ArrayList<>();
 
     public RecipePageState(RecipePageState copy) {
         recipename = copy.recipename;
         recipenameError = copy.recipenameError;
         countryoforigin = copy.countryoforigin;
         countryoforiginError = copy.countryoforiginError;
-        CalorieLimit = copy.CalorieLimit;
-        CalorieLimitError = copy.CalorieLimitError;
+        calories = copy.calories;
+        caloriesError = copy.caloriesError;
+        dietLabels = new ArrayList<>(copy.dietLabels);
     }
 
-    // Because of the previous copy constructor, the default constructor must be explicit.
     public RecipePageState() {
     }
 
@@ -38,11 +42,15 @@ public class RecipePageState {
     }
 
     public int getCalories() {
-        return CalorieLimit;
+        return calories;
     }
 
     public String getCaloriesError() {
-        return CalorieLimitError;
+        return caloriesError;
+    }
+
+    public List<String> getDietLabels() {
+        return new ArrayList<>(dietLabels);
     }
 
     public void setRecipename(String recipename) {
@@ -61,21 +69,28 @@ public class RecipePageState {
         this.countryoforiginError = countryoforiginError;
     }
 
-    public void setCalories(int calorieLimit) {
-        this.CalorieLimit = CalorieLimit;
+    public void setCalories(int calories) {
+        this.calories = calories;
     }
 
-    public void setCalorieLimitError(String portionsError) {
-        this.CalorieLimitError = CalorieLimitError;
+    public void setCaloriesError(String caloriesError) {
+        this.caloriesError = caloriesError;
+    }
+
+    public void setDietLabels(List<String> dietLabels) {
+        this.dietLabels = new ArrayList<>(dietLabels);
     }
 
     @Override
     public String toString() {
-        return "RecipeSearch{" +
-                "Recipe Name='" + recipename + '\'' +
-                ", Country Of Origin='" + countryoforigin + '\'' +
-                ", number of portions='" + CalorieLimit + '\'' +
+        return "RecipePageState{" +
+                "recipename='" + recipename + '\'' +
+                ", recipenameError='" + recipenameError + '\'' +
+                ", countryoforigin='" + countryoforigin + '\'' +
+                ", countryoforiginError='" + countryoforiginError + '\'' +
+                ", calories=" + calories +
+                ", caloriesError='" + caloriesError + '\'' +
+                ", dietLabels=" + dietLabels +
                 '}';
     }
 }
-
