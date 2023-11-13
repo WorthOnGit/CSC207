@@ -21,6 +21,7 @@ public class RecipeDoneInteractor implements RecipeDoneInputBoundary {
         currentState.setRecipename("");
         currentState.setCalories(0);
         currentState.setCountryoforigin("American");
+        currentState.setmealtype("lunch/dinner");
         currentState.setDietLabels(new ArrayList<>());
 
         this.recipePageViewModel.setState(currentState);

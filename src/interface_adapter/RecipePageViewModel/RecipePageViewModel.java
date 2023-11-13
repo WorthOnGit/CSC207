@@ -7,9 +7,10 @@ import java.beans.PropertyChangeSupport;
 
 public class RecipePageViewModel extends ViewModel {
 
-    public static final String TITLE_LABEL = "Find a Recipe";
+    public static final String TITLE_LABEL = "Find a Recipe (ie. Fill in one or more fields)";
     public static final String RECIPE_NAME_LABEL = "Recipe Name (ie. Chicken Parmesan)";
     public static final String COUSINE_TYPE_LABEL = "Cuisine Type";
+    public static final String MEAL_TYPE_LABEL = "Meal Type";
     public static final String SEARCH_BUTTON_LABEL = "Search";
     public static final String Done_BUTTON_LABEL = "Done";
 

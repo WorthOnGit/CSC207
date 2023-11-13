@@ -30,8 +30,12 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
     // Use JComboBox for cuisine types
     private final JComboBox<String> cuisineTypeComboBox;
 
+    private final JComboBox<String> MealTypeComboBox;
+
     // JList for diet labels
     private final JList<String> dietLabelList;
+
+    private final JList<String> healthLabelList;
 
     // JLabel to display the exact value of the slider
     private final JLabel caloriesValueLabel = new JLabel("Calories: 0");
@@ -77,6 +81,15 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
 
 
 
+        // Create JComboBox for cuisine types
+        String[] MealTypes = {"lunch/dinner", "brunch", "breakfast", "snack"};
+
+        MealTypeComboBox = new JComboBox<>(MealTypes);
+        LabelComboBoxPanel mealtypeinfo = new LabelComboBoxPanel(
+                new JLabel(RecipePageViewModel.MEAL_TYPE_LABEL), MealTypeComboBox);
+
+
+
 
 
         // Create a JList for diet labels
@@ -88,6 +101,20 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
         JScrollPane dietLabelScrollPane = new JScrollPane(dietLabelList);
 
 
+
+
+        // Create a JList for health labels
+        String[] healthLabels = {"Alcohol-Cocktail", "Alcohol-Free", "Celery-Free", "Crustacean-Free", "Dairy-Free", "DASH",
+                "Egg-Free", "Fish-Free", "FODMAP-Free", "Gluten-Free", "Immuno-Supportive", "Keto-Friendly", "Kidney-Friendly",
+                "Kosher", "Low Potassium", "Low Sugar", "Lupine-Free", "Mediterranean", "Mollusk-Free", "Mustard-Free",
+                "No oil added", "Paleo", "Peanut-Free", "Pescatarian", "Pork-Free", "Red-Meat-Free", "Sesame-Free",
+                "Shellfish-Free", "Soy-Free", "Sugar-Conscious", "Sulfite-Free", "Tree-Nut-Free", "Vegan", "Vegetarian", "Wheat-Free"};
+
+        healthLabelList = new JList<>(healthLabels);
+        healthLabelList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        // Create a JScrollPane for the health label list
+        JScrollPane healthLabelScrollPane = new JScrollPane(healthLabelList);
 
 
 
@@ -130,16 +157,43 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
             }
         });
 
+
+
+
+        MealTypeComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RecipePageState currentState = recipePageViewModel.getState();
+                currentState.setmealtype((String) MealTypeComboBox.getSelectedItem());
+                recipePageViewModel.setState(currentState);
+            }
+        });
+
+
+
         // Add a ListSelectionListener to update the value in the RecipePageState when dietLabelList is changed
         dietLabelList.addListSelectionListener(e -> {
             RecipePageState currentState = recipePageViewModel.getState();
             currentState.setDietLabels(dietLabelList.getSelectedValuesList());
-            System.out.println(dietLabelList.getSelectedValuesList());
             recipePageViewModel.setState(currentState);
             // Update the label to display the selected diet labels
             selectedDietLabelsLabel.setText("Selected Diet Labels: " + Arrays.toString(dietLabelList.getSelectedValuesList().toArray()));
 
         });
+
+
+
+
+//        // Add a ListSelectionListener to update the value in the RecipePageState when healthLabelList is changed
+        healthLabelList.addListSelectionListener(e -> {
+            RecipePageState currentState = recipePageViewModel.getState();
+            currentState.setHealthLabels(healthLabelList.getSelectedValuesList());
+            recipePageViewModel.setState(currentState);
+            // Update the label to display the selected health labels
+        });
+
+
+
 
         Done.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -186,8 +240,9 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
         this.add(title);
         this.add(recipenameinfo);
         this.add(countryoforigininfo);
-        this.add(new LabelScrollPanePanel(new JLabel("Diet Label"), dietLabelScrollPane));
-        this.add(selectedDietLabelsLabel); // Add the label directly to the panel
+        this.add(mealtypeinfo);
+        this.add(new LabelScrollPanePanel(new JLabel("Diet Label(Hold CTRL) \n"), dietLabelScrollPane));
+        this.add(new LabelScrollPanePanel(new JLabel("Health Label(Hold CTRL) \n"), healthLabelScrollPane));
         this.add(caloriesinfo);
         this.add(buttons);
     }
@@ -210,6 +265,8 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
         recipenameInputField.setText(state.getRecipename());
         caloriesSlider.setValue(state.getCalories());
         cuisineTypeComboBox.setSelectedItem(state.getCountryoforigin());
+        MealTypeComboBox.setSelectedItem(state.getmealtype());
         dietLabelList.setSelectedIndices(new int[0]);
+        healthLabelList.setSelectedIndices(new int[0]);
     }
 }
