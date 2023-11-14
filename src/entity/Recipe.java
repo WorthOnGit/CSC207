@@ -1,13 +1,10 @@
 package entity;
 
-
-import java.util.HashMap;
-
 public class Recipe {
 
-    private final HashMap Recipe;
+    private final String Recipe;
 
-    public Recipe(HashMap recipe) {
+    public Recipe(String recipe) {
         Recipe = recipe;
     }
 

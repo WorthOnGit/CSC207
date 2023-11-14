@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecipePageState {
-    private String recipename = "";
+    private static String recipename = "";
     private String recipenameError = null;
-    private String countryoforigin = "";
-    private String mealtype = "";
+    private static String countryoforigin = "";
+    private static String mealtype = "";
     private String mealtypeerror = null;
     private String countryoforiginError = null;
-    private int calories = 0;
+    private static int calories = 0;
     private String caloriesError = null;
-    private List<String> dietLabels = new ArrayList<>();
-    private List<String> healthLabels = new ArrayList<>();
+    private static List<String> dietLabels = new ArrayList<>();
+    private static List<String> healthLabels = new ArrayList<>();
 
     public RecipePageState(RecipePageState copy) {
         recipename = copy.recipename;
@@ -32,7 +32,7 @@ public class RecipePageState {
     public RecipePageState() {
     }
 
-    public String getRecipename() {
+    public static String getRecipename() {
         return recipename;
     }
 
@@ -40,11 +40,11 @@ public class RecipePageState {
         return recipenameError;
     }
 
-    public String getCountryoforigin() {
+    public static String getCountryoforigin() {
         return countryoforigin;
     }
 
-    public String getmealtype() {
+    public static String getmealtype() {
         return mealtype;
     }
 
@@ -57,7 +57,7 @@ public class RecipePageState {
         return countryoforiginError;
     }
 
-    public int getCalories() {
+    public static int getCalories() {
         return calories;
     }
 
@@ -65,10 +65,10 @@ public class RecipePageState {
         return caloriesError;
     }
 
-    public List<String> getHealthLabels() {
+    public static List<String> getHealthLabels() {
         return new ArrayList<>(healthLabels);
     }
-    public List<String> getDietLabels() {
+    public static List<String> getDietLabels() {
         return new ArrayList<>(dietLabels);
     }
 
