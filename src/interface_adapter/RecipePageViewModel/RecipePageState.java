@@ -24,8 +24,8 @@ public class RecipePageState {
         mealtypeerror = copy.mealtypeerror;
         calories = copy.calories;
         caloriesError = copy.caloriesError;
-        dietLabels = new ArrayList<>(copy.dietLabels);
-        healthLabels = new ArrayList<>(copy.healthLabels);
+        dietLabels = copy.dietLabels;
+        healthLabels = copy.healthLabels;
     }
 
 
@@ -66,10 +66,10 @@ public class RecipePageState {
     }
 
     public List<String> getHealthLabels() {
-        return new ArrayList<>(healthLabels);
+        return healthLabels;
     }
     public List<String> getDietLabels() {
-        return new ArrayList<>(dietLabels);
+        return dietLabels;
     }
 
     public void setRecipename(String recipename) {
@@ -107,7 +107,7 @@ public class RecipePageState {
     public void setDietLabels(List<String> dietLabels) {
         this.dietLabels = new ArrayList<>(dietLabels);
     }
-    public void setHealthLabels(List<String> dietLabels) {
+    public void setHealthLabels(List<String> healthLabels) {
         this.healthLabels = new ArrayList<>(healthLabels);
     }
 
@@ -115,12 +115,10 @@ public class RecipePageState {
     public String toString() {
         return "RecipePageState{" +
                 "recipename='" + recipename + '\'' +
-                ", recipenameError='" + recipenameError + '\'' +
                 ", countryoforigin='" + countryoforigin + '\'' +
-                ", countryoforiginError='" + countryoforiginError + '\'' +
                 ", calories=" + calories +
-                ", caloriesError='" + caloriesError + '\'' +
                 ", dietLabels=" + dietLabels +
+                ", healthLabels=" + healthLabels +
                 '}';
     }
 }

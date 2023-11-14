@@ -142,6 +142,9 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
         search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(search)) {
+
+                    System.out.println(recipePageViewModel.getState().toString());
+
                     recipeSearchButtonController.execute(recipePageViewModel.getState().getRecipename(),
                             recipePageViewModel.getState().getCountryoforigin(),
                             recipePageViewModel.getState().getCalories(),
@@ -203,9 +206,6 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
             RecipePageState currentState = recipePageViewModel.getState();
             currentState.setDietLabels(dietLabelList.getSelectedValuesList());
             recipePageViewModel.setState(currentState);
-            // Update the label to display the selected diet labels
-            selectedDietLabelsLabel.setText("Selected Diet Labels: " + Arrays.toString(dietLabelList.getSelectedValuesList().toArray()));
-
         });
 
 
@@ -247,10 +247,12 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
         recipenameInputField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                RecipePageState currentState = recipePageViewModel.getState();
-                String text = recipenameInputField.getText() + e.getKeyChar();
-                currentState.setRecipename(text);
-                recipePageViewModel.setState(currentState);
+                SwingUtilities.invokeLater(() -> {
+                    RecipePageState currentState = recipePageViewModel.getState();
+                    String text = recipenameInputField.getText();
+                    currentState.setRecipename(text);
+                    recipePageViewModel.setState(currentState);
+                });
             }
 
             @Override
