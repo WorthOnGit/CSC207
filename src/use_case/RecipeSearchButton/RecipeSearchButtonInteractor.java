@@ -37,8 +37,11 @@ public class RecipeSearchButtonInteractor implements RecipeSearchButtonInputBoun
             presenter.presentrecipe(recipe);
 
         } catch (RuntimeException e) {
+            e.printStackTrace();  // Add this line to print the exception details
             presenter.presentnoresultfail();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-}
+    }
 }
