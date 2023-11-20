@@ -1,5 +1,7 @@
 package DataAccess;
 
+// Go to project structure -> Libraries. Click the + button and
+// add from maven and type in google.code.gson and add the latest version.
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -22,19 +24,9 @@ public class DataAccess implements DataAccessInterface {
 
     @Override
     public Recipe getRecipe(String recipename, String countryoforigin, int Calories, List<String> dietLabels, List<String> healthLabels, String mealtype) throws IOException {
-        return new Recipe(WholeRecipe);
-    }
-    public static void main(String[] args) throws IOException {
         RecipeInfo recipeInfo = getRecipeInfo();
         String WholeRecipe = "Recipe name:\n" + recipeInfo.getRecipeName() + "\n\nCalories:\n" + recipeInfo.getCalories() + "\n\nCuisine Type:\n" + recipeInfo.getCuisineType() + "\n\nMeal Type\n" + recipeInfo.getMealType() + "\n\nDiet Label:\n" + recipeInfo.formattedDietLabels() + "\nHealth Label:\n" + recipeInfo.formattedHealthLabels() + "\nIngredients:\n" + recipeInfo.formattedIngredients();
-        String recipeName = recipeInfo.getRecipeName();
-        double calories = recipeInfo.getCalories();
-        String cuisineType = recipeInfo.getCuisineType();
-        String mealType = recipeInfo.getMealType();
-        String dietLabels = recipeInfo.formattedDietLabels();
-        String healthLabels = recipeInfo.formattedHealthLabels();
-        String ingredients = recipeInfo.formattedIngredients();
-
+        return new Recipe(WholeRecipe);
     }
 
     public static RecipeInfo getRecipeInfo() throws IOException {
@@ -42,10 +34,13 @@ public class DataAccess implements DataAccessInterface {
 
         String recipename = RecipePageState.getRecipename().replace(" ", "%");
         String countryoforigin = RecipePageState.getCountryoforigin().replace(" ", "%");
-
+        String mealtype = //first letter should be capital
+                RecipePageState.getmealtype().substring(0, 1).toUpperCase() + RecipePageState.getmealtype().substring(1).toLowerCase();
         StringBuilder dietLabelsUrl = new StringBuilder();
         for (String dietLabel : // dietLabels from RecipePageState
                 RecipePageState.getDietLabels()) {
+            // lower case it
+            dietLabel = dietLabel.toLowerCase();
             dietLabelsUrl.append("&diet=").append(dietLabel);
         }
 
@@ -56,7 +51,7 @@ public class DataAccess implements DataAccessInterface {
         }
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.edamam.com/api/recipes/v2?type=public&q=" + recipename + "&app_id=46fc17af&app_key=de222735d9046e67f7dff62e54ff616f" + dietLabelsUrl.toString() +
-                        healthLabelsUrl.toString() + "&cuisineType" + countryoforigin + "&mealtype=" + RecipePageState.getmealtype() + "&calories=" + RecipePageState.getCalories()))
+                        healthLabelsUrl.toString() + "&cuisineType=" + countryoforigin + "&mealtype=" + RecipePageState.getmealtype() + "&calories=" + RecipePageState.getCalories()))
                 .header("app_id", "46fc17af")
                 .header("app_key", "de222735d9046e67f7dff62e54ff616f")
                 .method("GET", HttpRequest.BodyPublishers.noBody())
@@ -69,33 +64,49 @@ public class DataAccess implements DataAccessInterface {
             throw new RuntimeException(e);
         }
 
+        //print request
+        System.out.println(request);
+
         // Parse JSON response
         JsonParser parser = new JsonParser();
         JsonObject jsonResponse = parser.parse(response.body()).getAsJsonObject();
 
+        // Extract recipe name from the first hit
         JsonArray hits = jsonResponse.getAsJsonArray("hits");
+        JsonObject firstHit = hits.get(0).getAsJsonObject();
+        JsonElement recipeElement = firstHit.get("recipe");
 
-        String recipeName;
-        JsonObject recipe;
-        if (hits != null && !hits.isJsonNull() && hits.size() > 0) {
-            JsonObject firstHit = hits.get(0).getAsJsonObject();
-            JsonElement recipeElement = firstHit.get("recipe");
+        // Keep moving onto the next hit until the calories are within the range
+        int i = 0;
+        while (true) {
+            // Get the recipe element from the current hit
+            recipeElement = hits.get(i).getAsJsonObject().get("recipe");
 
-            if (recipeElement.isJsonObject()) {
-                recipe = recipeElement.getAsJsonObject();
-            } else {
-                // Handle the case where "recipe" is a primitive (e.g., a string or number)
-                // You might need to adjust this based on your actual JSON structure
-                recipe = new JsonObject();
-                recipe.addProperty("label", recipeElement.getAsString());
-                // Add other fields if needed
+            // Get the calories from the recipe element
+            JsonObject recipe = recipeElement.getAsJsonObject();
+            double calories = recipe.get("calories").getAsDouble();
+
+            // Check if the calories are less than the max calories
+            if (calories <= RecipePageState.getCalories()) {
+                break;
             }
 
-        } else {
-            throw new RuntimeException("No recipes found");
+            // Move onto the next hit
+            i++;
         }
 
-        recipeName = recipe.get("label").getAsString();
+        JsonObject recipe;
+        if (recipeElement.isJsonObject()) {
+            recipe = recipeElement.getAsJsonObject();
+        } else {
+            // Handle the case where "recipe" is a primitive (e.g., a string or number)
+            // You might need to adjust this based on your actual JSON structure
+            recipe = new JsonObject();
+            recipe.addProperty("label", recipeElement.getAsString());
+            // Add other fields if needed
+        }
+
+        String recipeName = recipe.get("label").getAsString();
         double calories = recipe.get("calories").getAsDouble();
         JsonArray dietLabels = recipe.getAsJsonArray("dietLabels");
         JsonArray healthLabels = recipe.getAsJsonArray("healthLabels");
@@ -105,7 +116,6 @@ public class DataAccess implements DataAccessInterface {
         JsonArray ingredients = recipe.getAsJsonArray("ingredients");
         // Create RecipeInfo object
         RecipeInfo recipeInfo = new RecipeInfo(recipeName, calories, dietLabels, healthLabels, cuisineType, mealType, ingredientLines, ingredients);
-
         return recipeInfo;
     }
 }
@@ -152,7 +162,7 @@ class RecipeInfo {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < dietLabels.size(); i++) {
             String dietLabel = dietLabels.get(i).getAsString();
-            result.append("- ").append(dietLabel).append("\n");
+            result.append(dietLabel).append("\n");
         }
         return result.toString();
     }
@@ -161,17 +171,19 @@ class RecipeInfo {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < healthLabels.size(); i++) {
             String healthLabel = healthLabels.get(i).getAsString();
-            result.append("- ").append(healthLabel).append("\n");
+            result.append(healthLabel).append("\n");
         }
         return result.toString();
     }
+
     public String formattedIngredients() {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < ingredients.size(); i++) {
             JsonObject ingredientObject = ingredients.get(i).getAsJsonObject();
             String ingredient = ingredientObject.get("text").getAsString();
-            result.append("- ").append(ingredient).append("\n");
+            result.append(ingredient).append("\n");
         }
         return result.toString();
     }
 }
+
