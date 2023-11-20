@@ -1,5 +1,7 @@
 package DataAccess;
 
+// Go to project structure -> Libraries. Click the + button and
+// add from maven and type in google.code.gson and add the latest version.
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
