@@ -32,7 +32,7 @@ public class DataAccess implements DataAccessInterface {
     public static RecipeInfo getRecipeInfo() throws IOException {
         // Build the diet labels part of the URL
 
-        String recipename = RecipePageState.getRecipename().replace(" ", "%");
+        String recipename = RecipePageState.getRecipename().replace(" ", "%20");
         String countryoforigin = RecipePageState.getCountryoforigin().replace(" ", "%");
         String mealtype = //first letter should be capital
                 RecipePageState.getmealtype().substring(0, 1).toUpperCase() + RecipePageState.getmealtype().substring(1).toLowerCase();
