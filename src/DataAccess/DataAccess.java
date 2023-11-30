@@ -110,8 +110,16 @@ public class DataAccess implements DataAccessInterface {
         double calories = recipe.get("calories").getAsDouble();
         JsonArray dietLabels = recipe.getAsJsonArray("dietLabels");
         JsonArray healthLabels = recipe.getAsJsonArray("healthLabels");
+        // Ensure mealType is always the first item
+        String mealType = "";
+        JsonArray mealTypeArray = recipe.getAsJsonArray("mealType");
+        if (mealTypeArray != null && mealTypeArray.size() > 0) {
+            mealType = mealTypeArray.get(0).getAsString();
+        }
+
+        // Ensure cuisineType is always the first item
         String cuisineType = recipe.get("cuisineType").getAsString();
-        String mealType = recipe.get("mealType").getAsString();
+
         JsonArray ingredientLines = recipe.getAsJsonArray("ingredientLines");
         JsonArray ingredients = recipe.getAsJsonArray("ingredients");
         // Create RecipeInfo object
