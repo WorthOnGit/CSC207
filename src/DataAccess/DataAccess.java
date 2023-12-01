@@ -34,6 +34,7 @@ public class DataAccess implements RecipeDataAccessInterface {
 
         String recipename = RecipePageState.getRecipename().replace(" ", "%20");
         String countryoforigin = RecipePageState.getCountryoforigin().replace(" ", "%");
+        Integer cal = RecipePageState.getCalories();
         String mealtype = //first letter should be capital
                 RecipePageState.getmealtype().substring(0, 1).toUpperCase() + RecipePageState.getmealtype().substring(1).toLowerCase();
         StringBuilder dietLabelsUrl = new StringBuilder();
@@ -49,9 +50,18 @@ public class DataAccess implements RecipeDataAccessInterface {
         for (String healthLabel : RecipePageState.getHealthLabels()) {
             healthLabelsUrl.append("&health=").append(healthLabel);
         }
+
+        // if the calories arent set, set them to 3000
+        if (cal == null || cal == 0) {
+            cal = 3000;
+        }
+
+
+
+
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.edamam.com/api/recipes/v2?type=public&q=" + recipename + "&app_id=46fc17af&app_key=de222735d9046e67f7dff62e54ff616f" + dietLabelsUrl.toString() +
-                        healthLabelsUrl.toString() + "&cuisineType=" + countryoforigin + "&mealtype=" + RecipePageState.getmealtype() + "&calories=" + RecipePageState.getCalories()))
+                        healthLabelsUrl.toString() + "&cuisineType=" + countryoforigin + "&mealtype=" + RecipePageState.getmealtype() + "&calories=" + cal))
                 .header("app_id", "46fc17af")
                 .header("app_key", "de222735d9046e67f7dff62e54ff616f")
                 .method("GET", HttpRequest.BodyPublishers.noBody())
@@ -87,7 +97,7 @@ public class DataAccess implements RecipeDataAccessInterface {
             double calories = recipe.get("calories").getAsDouble();
 
             // Check if the calories are less than the max calories
-            if (calories <= RecipePageState.getCalories()) {
+            if (calories <= cal) {
                 break;
             }
 
@@ -110,8 +120,16 @@ public class DataAccess implements RecipeDataAccessInterface {
         double calories = recipe.get("calories").getAsDouble();
         JsonArray dietLabels = recipe.getAsJsonArray("dietLabels");
         JsonArray healthLabels = recipe.getAsJsonArray("healthLabels");
+        // Ensure mealType is always the first item
+        String mealType = "";
+        JsonArray mealTypeArray = recipe.getAsJsonArray("mealType");
+        if (mealTypeArray != null && mealTypeArray.size() > 0) {
+            mealType = mealTypeArray.get(0).getAsString();
+        }
+
+        // Ensure cuisineType is always the first item
         String cuisineType = recipe.get("cuisineType").getAsString();
-        String mealType = recipe.get("mealType").getAsString();
+
         JsonArray ingredientLines = recipe.getAsJsonArray("ingredientLines");
         JsonArray ingredients = recipe.getAsJsonArray("ingredients");
         // Create RecipeInfo object
