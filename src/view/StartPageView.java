@@ -21,6 +21,10 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
 
     private final JButton calorie_count;
 
+    private final JButton sign_up;
+
+    private final JButton login;
+
 
     public StartPageView(StartPageViewModel signupViewModel, interface_adapter.RecipePageButton.RecipeSearchController recipeSearchController) {
         this.StartPageViewModel = signupViewModel;
@@ -34,10 +38,17 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
         JPanel buttons = new JPanel();
         recipe_search = new JButton(StartPageViewModel.recipe_search_BUTTON_LABEL);
         buttons.add(recipe_search);
-        plan_meal = new JButton(StartPageViewModel.plan_meal_BUTTON_LABEL);
+        plan_meal = new JButton(interface_adapter.StartPage.StartPageViewModel.plan_meal_BUTTON_LABEL);
         buttons.add(plan_meal);
         calorie_count = new JButton(StartPageViewModel.Calorie_counter_BUTTON_LABEL);
         buttons.add(calorie_count);
+
+        sign_up = new JButton(StartPageViewModel.sign_up_BUTTON_LABEL);
+        buttons.add(sign_up);
+
+        login = new JButton(StartPageViewModel.login_BUTTON_LABEL);
+        buttons.add(login);
+
 
         recipe_search.addActionListener(
                 new ActionListener() {
@@ -71,11 +82,32 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(calorie_count)) {
-
                         }
 
                     }
                 }
+        );
+
+        sign_up.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(e.getSource().equals(sign_up)){
+                    }
+                }
+            }
+        );
+
+        login.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(e.getSource().equals(login)){
+
+                        }
+                    }
+                }
+
         );
 
 
