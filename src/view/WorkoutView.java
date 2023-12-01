@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.SearchByMuscle.SearchByMuscleViewModel;
 import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.Workout.WorkoutViewModel;
@@ -23,7 +24,7 @@ public class WorkoutView extends JPanel implements ActionListener, PropertyChang
 
 
 
-    public WorkoutView(WorkoutViewModel workoutViewModel, ViewManagerModel viewManagerModel, StartPageViewModel startPageViewModel) {
+    public WorkoutView(WorkoutViewModel workoutViewModel, ViewManagerModel viewManagerModel, StartPageViewModel startPageViewModel, SearchByMuscleViewModel searchByMuscleViewModel) {
         this.WorkoutViewModel = workoutViewModel;
         workoutViewModel.addPropertyChangeListener(this);
 
@@ -47,7 +48,8 @@ public class WorkoutView extends JPanel implements ActionListener, PropertyChang
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(Search_muscle_group)) {
-                            // TODO
+                            viewManagerModel.setActiveView(searchByMuscleViewModel.getViewName());
+                            viewManagerModel.firePropertyChanged();
                         }
 
                     }
@@ -86,7 +88,7 @@ public class WorkoutView extends JPanel implements ActionListener, PropertyChang
         this.add(title);
         this.add(Box.createVerticalGlue());  // Adds flexible space
         this.add(buttons);
-        this.add(Box.createVerticalGlue());  // Adds flexible space
+        this.add(Box.createVerticalStrut(20));  // Adds flexible space
         this.add(cancel);
     }
 

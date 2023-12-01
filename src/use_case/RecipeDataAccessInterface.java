@@ -4,6 +4,6 @@ import entity.Recipe;
 import java.io.IOException;
 import java.util.List;
 
-public interface DataAccessInterface {
+public interface RecipeDataAccessInterface {
     Recipe getRecipe(String recipename, String countryoforigin, int Calories, List<String> dietLabels, List<String> healthLabels, String mealtype) throws IOException;
 }

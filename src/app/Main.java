@@ -1,13 +1,11 @@
 package app;
 
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
+import interface_adapter.SearchByMuscle.SearchByMuscleViewModel;
 import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.Workout.WorkoutViewModel;
 import interface_adapter.ViewManagerModel;
-import view.RecipePageView;
-import view.StartPageView;
-import view.ViewManager;
-import view.WorkoutView;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,6 +31,7 @@ public class Main {
         StartPageViewModel startPageViewModel = new StartPageViewModel();
         RecipePageViewModel recipePageViewModel = new RecipePageViewModel();
         WorkoutViewModel workoutViewModel = new WorkoutViewModel();
+        SearchByMuscleViewModel searchByMuscleViewModel = new SearchByMuscleViewModel();
 
 
         RecipePageView recipePageView = RecipeSearchUseCaseFactory.create(viewManagerModel, recipePageViewModel, startPageViewModel, application);
@@ -41,8 +40,11 @@ public class Main {
         StartPageView startPageView = StartPageUseCaseFactory.create(viewManagerModel, startPageViewModel, recipePageViewModel, workoutViewModel);
         views.add(startPageView, startPageView.viewName);
 
-        WorkoutView workoutView = new WorkoutView(workoutViewModel, viewManagerModel, startPageViewModel);
+        WorkoutView workoutView = new WorkoutView(workoutViewModel, viewManagerModel, startPageViewModel, searchByMuscleViewModel);
         views.add(workoutView, workoutView.viewName);
+
+        SearchByMuscleView searchByMuscleView = SearchByMuscleUseCaseFactory.create(searchByMuscleViewModel, workoutViewModel, viewManagerModel, application);
+        views.add(searchByMuscleView, searchByMuscleView.viewName);
 
         viewManagerModel.setActiveView(startPageView.viewName);
         viewManagerModel.firePropertyChanged();
