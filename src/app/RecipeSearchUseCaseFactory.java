@@ -9,7 +9,7 @@ import interface_adapter.RecipeSearchButton.RecipeSeatchButtonPresenter;
 import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
 import interface_adapter.*;
-import use_case.DataAccessInterface;
+import use_case.RecipeDataAccessInterface;
 import use_case.RecipeDoneButton.RecipeDoneInputBoundary;
 import use_case.RecipeDoneButton.RecipeDoneInteractor;
 import use_case.RecipeDoneButton.RecipeDoneOutputBoundary;
@@ -55,7 +55,7 @@ public class RecipeSearchUseCaseFactory {
 
         RecipeSearchButtonOutputBoundary recipeSearchbuttonPresenter = new RecipeSeatchButtonPresenter(view);
 
-        DataAccessInterface dataAccess = new DataAccess();
+        RecipeDataAccessInterface dataAccess = new DataAccess();
 
         RecipeSearchButtonInputBoundary recipeSearchusecaseinteractor = new RecipeSearchButtonInteractor(recipeSearchbuttonPresenter, dataAccess);
 

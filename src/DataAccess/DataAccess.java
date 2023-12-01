@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonElement;
 import interface_adapter.RecipePageViewModel.RecipePageState;
-import use_case.DataAccessInterface;
+import use_case.RecipeDataAccessInterface;
 import entity.Recipe;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 
-public class DataAccess implements DataAccessInterface {
+public class DataAccess implements RecipeDataAccessInterface {
 
     private static String WholeRecipe;
 

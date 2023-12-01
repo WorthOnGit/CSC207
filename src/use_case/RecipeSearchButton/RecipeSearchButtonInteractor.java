@@ -1,6 +1,6 @@
 package use_case.RecipeSearchButton;
 
-import use_case.DataAccessInterface;
+import use_case.RecipeDataAccessInterface;
 import entity.Recipe;
 
 import java.io.IOException;
@@ -9,11 +9,11 @@ public class RecipeSearchButtonInteractor implements RecipeSearchButtonInputBoun
 
     private final RecipeSearchButtonOutputBoundary presenter;
 
-    private final DataAccessInterface dataAccess;
+    private final RecipeDataAccessInterface dataAccess;
 
     private final Recipe recipe = null;
 
-    public RecipeSearchButtonInteractor(RecipeSearchButtonOutputBoundary presenter, DataAccessInterface dataAccess) {
+    public RecipeSearchButtonInteractor(RecipeSearchButtonOutputBoundary presenter, RecipeDataAccessInterface dataAccess) {
         this.presenter = presenter;
         this.dataAccess = dataAccess;
     }
