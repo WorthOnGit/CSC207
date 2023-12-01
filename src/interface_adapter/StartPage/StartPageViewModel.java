@@ -15,6 +15,8 @@ public class StartPageViewModel extends ViewModel {
     public static final String plan_meal_BUTTON_LABEL = "Plan Meal";
     public static final String Calorie_counter_BUTTON_LABEL = "Calorie Counter";
 
+    public static final String Workout_BUTTON_LABEL = "Workout Search";
+
     private StartPageState state = new StartPageState();
 
     public StartPageViewModel() {

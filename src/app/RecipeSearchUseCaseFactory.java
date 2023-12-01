@@ -4,7 +4,8 @@ package app;
 import DataAccess.DataAccess;
 import interface_adapter.RecipeDoneButton.*;
 
-import interface_adapter.RecipePageButton.RecipeSearchPresenter;
+import interface_adapter.RecipeSearchButton.RecipeSearchButtonController;
+import interface_adapter.RecipeSearchButton.RecipeSeatchButtonPresenter;
 import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
 import interface_adapter.*;

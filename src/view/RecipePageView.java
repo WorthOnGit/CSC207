@@ -3,7 +3,7 @@ package view;
 import interface_adapter.RecipePageViewModel.RecipePageState;
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
 import interface_adapter.RecipeDoneButton.RecipeDoneController;
-import interface_adapter.RecipeSearchButtonController;
+import interface_adapter.RecipeSearchButton.RecipeSearchButtonController;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

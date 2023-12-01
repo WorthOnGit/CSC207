@@ -1,4 +1,4 @@
-package interface_adapter.RecipePageButton;
+package interface_adapter.StartPage.RecipePageButton;
 
 import use_case.RecipePageButton.RecipeSearchOutputBoundary;
 import interface_adapter.ViewManagerModel;
