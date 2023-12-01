@@ -2,10 +2,12 @@ package app;
 
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
 import interface_adapter.StartPage.StartPageViewModel;
+import interface_adapter.Workout.WorkoutViewModel;
 import interface_adapter.ViewManagerModel;
 import view.RecipePageView;
 import view.StartPageView;
 import view.ViewManager;
+import view.WorkoutView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,12 +32,17 @@ public class Main {
 
         StartPageViewModel startPageViewModel = new StartPageViewModel();
         RecipePageViewModel recipePageViewModel = new RecipePageViewModel();
+        WorkoutViewModel workoutViewModel = new WorkoutViewModel();
+
 
         RecipePageView recipePageView = RecipeSearchUseCaseFactory.create(viewManagerModel, recipePageViewModel, startPageViewModel, application);
         views.add(recipePageView, recipePageView.viewName);
 
-        StartPageView startPageView = StartPageUseCaseFactory.create(viewManagerModel, startPageViewModel, recipePageViewModel);
+        StartPageView startPageView = StartPageUseCaseFactory.create(viewManagerModel, startPageViewModel, recipePageViewModel, workoutViewModel);
         views.add(startPageView, startPageView.viewName);
+
+        WorkoutView workoutView = new WorkoutView(workoutViewModel, viewManagerModel, startPageViewModel);
+        views.add(workoutView, workoutView.viewName);
 
         viewManagerModel.setActiveView(startPageView.viewName);
         viewManagerModel.firePropertyChanged();

@@ -1,4 +1,4 @@
-package interface_adapter;
+package interface_adapter.RecipeSearchButton;
 
 import entity.Recipe;
 import use_case.RecipeSearchButton.RecipeSearchButtonOutputBoundary;
