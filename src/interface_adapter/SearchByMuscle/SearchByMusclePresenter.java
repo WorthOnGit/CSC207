@@ -14,7 +14,7 @@ public class SearchByMusclePresenter implements SearchByMuscleOutputBoundary {
     }
     @Override
     public void Presentworkout(Workout workout) {
-
+        JOptionPane.showMessageDialog(view, String.format("Good gob"));
     }
 
     @Override

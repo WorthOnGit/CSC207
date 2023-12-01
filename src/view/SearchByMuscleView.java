@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 public class SearchByMuscleView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "Search By Muscle View";
@@ -82,8 +83,8 @@ public class SearchByMuscleView extends JPanel implements ActionListener, Proper
         search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(search)) {
-                    SearchByMuscleState currentState = searchByMuscleViewModel.getState();
-                    searchByMuscleController.execute(currentState.getmuscles());
+                    searchByMuscleController.execute((ArrayList) muscleList.getSelectedValuesList());
+                    System.out.println(muscleList.getSelectedValuesList());
 
 
 
@@ -91,17 +92,6 @@ public class SearchByMuscleView extends JPanel implements ActionListener, Proper
             }
         });
 
-
-//        clear.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent evt) {
-//                if (evt.getSource().equals(clear)) {
-//                    SearchByMuscleState currentState = searchByMuscleViewModel.getState();
-//
-//                    searchByMuscleViewModel.setState(currentState);
-//                    searchByMuscleViewModel.firePropertyChanged();
-//                }
-//            }
-//        });
 
 
 //        // Add a ListSelectionListener to update the value in the RecipePageState when healthLabelList is changed
