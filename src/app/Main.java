@@ -2,6 +2,7 @@ package app;
 
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
 import interface_adapter.SearchByMuscle.SearchByMuscleViewModel;
+import interface_adapter.SearchWorkoutByNameViewModel;
 import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.Workout.WorkoutViewModel;
 import interface_adapter.ViewManagerModel;
@@ -32,6 +33,8 @@ public class Main {
         RecipePageViewModel recipePageViewModel = new RecipePageViewModel();
         WorkoutViewModel workoutViewModel = new WorkoutViewModel();
         SearchByMuscleViewModel searchByMuscleViewModel = new SearchByMuscleViewModel();
+        SearchWorkoutByNameViewModel searchWorkoutByNameViewModel = new SearchWorkoutByNameViewModel();
+
 
 
         RecipePageView recipePageView = RecipeSearchUseCaseFactory.create(viewManagerModel, recipePageViewModel, startPageViewModel, application);
@@ -40,11 +43,14 @@ public class Main {
         StartPageView startPageView = StartPageUseCaseFactory.create(viewManagerModel, startPageViewModel, recipePageViewModel, workoutViewModel);
         views.add(startPageView, startPageView.viewName);
 
-        WorkoutView workoutView = new WorkoutView(workoutViewModel, viewManagerModel, startPageViewModel, searchByMuscleViewModel);
+        WorkoutView workoutView = new WorkoutView(workoutViewModel, viewManagerModel, startPageViewModel, searchByMuscleViewModel, searchWorkoutByNameViewModel);
         views.add(workoutView, workoutView.viewName);
 
         SearchByMuscleView searchByMuscleView = SearchByMuscleUseCaseFactory.create(searchByMuscleViewModel, workoutViewModel, viewManagerModel, application);
         views.add(searchByMuscleView, searchByMuscleView.viewName);
+
+        SearchWorkoutByNameView searchWorkoutByNameView = SearchWorkoutByNameUseCaseFactory.create(searchWorkoutByNameViewModel, viewManagerModel, workoutViewModel);
+        views.add(searchWorkoutByNameView, searchWorkoutByNameView.viewName);
 
         viewManagerModel.setActiveView(startPageView.viewName);
         viewManagerModel.firePropertyChanged();
