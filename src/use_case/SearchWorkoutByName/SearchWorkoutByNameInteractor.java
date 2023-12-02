@@ -3,6 +3,9 @@ package use_case.SearchWorkoutByName;
 import entity.Workout;
 import use_case.WorkoutDataAccessInterface;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SearchWorkoutByNameInteractor implements SearchWorkoutByNameInputBoundary {
 
     private SearchWorkoutByNameOutputBoundary outputBoundary;
@@ -13,18 +16,22 @@ public class SearchWorkoutByNameInteractor implements SearchWorkoutByNameInputBo
         this.outputBoundary = outputBoundary;
         this.workoutDataAccessInterface = workoutDataAccessInterface;
     }
+
     @Override
     public void execute(String name) {
         if (name.isEmpty()) {
             outputBoundary.Presentemptystring();
-        } else {
-            try {
-                Workout workout = workoutDataAccessInterface.getworkout(name);
-                outputBoundary.Presentworkout(workout);
-            } catch (Exception e) {
-                outputBoundary.PresentNotFound();
-            }
-            outputBoundary.Presentworkout(new Workout());
+            return;
+        }
+
+        try {
+            // Modify this line to receive a list of workouts
+            List<Workout> workouts = workoutDataAccessInterface.getworkout(name, "", "", "");
+
+            // Pass the list of workouts to the output boundary
+            outputBoundary.Presentworkouts((ArrayList<Workout>) workouts);
+        } catch (Exception e) {
+            outputBoundary.PresentNotFound();
         }
     }
 }

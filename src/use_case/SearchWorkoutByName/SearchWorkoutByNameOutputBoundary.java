@@ -2,9 +2,11 @@ package use_case.SearchWorkoutByName;
 
 import entity.Workout;
 
+import java.util.ArrayList;
+
 public interface SearchWorkoutByNameOutputBoundary {
 
-        void Presentworkout(Workout workout);
+        void Presentworkouts(ArrayList<Workout> workout);
 
         void Presentemptystring();
 

@@ -21,7 +21,7 @@ public class SearchByMuscleInteractor implements SearchByMuscleInputBoundary {
         if (muscles.size() == 0) {
             output.Presentnoneselected();
         } else {
-            Workout workout = workoutDataAccessInterface.getworkout(muscles);
+            Workout workout = workoutDataAccessInterface.getworkout1(muscles);
             output.Presentworkout(workout);
         }
     }

@@ -1,46 +1,31 @@
 package entity;
 
-import java.util.HashMap;
+import java.util.List;
 
 public class Workout {
+    private final String name;
+    private final String target;
+    private final List<String> secondaryMuscles;
+    private final String gifUrl;
 
-    private final HashMap<String, String> workout = new HashMap<>();
-
-    public Workout() {
-        workout.put("Bench Press", "Chest");
-        workout.put("Incline Bench Press", "Chest");
-        workout.put("Decline Bench Press", "Chest");
-        workout.put("Dumbbell Bench Press", "Chest");
-        workout.put("Dumbbell Incline Bench Press", "Chest");
-        workout.put("Dumbbell Decline Bench Press", "Chest");
-        workout.put("Dumbbell Fly", "Chest");
-        workout.put("Dumbbell Incline Fly", "Chest");
-        workout.put("Dumbbell Decline Fly", "Chest");
-        workout.put("Push Up", "Chest");
-        workout.put("Incline Push Up", "Chest");
-        workout.put("Decline Push Up", "Chest");
-        workout.put("Dumbbell Pullover", "Chest");
-        workout.put("Dumbbell Incline Pullover", "Chest");
-        workout.put("Dumbbell Decline Pullover", "Chest");
-        workout.put("Dumbbell Press", "Chest");
-        workout.put("Dumbbell Incline Press", "Chest");
-        workout.put("Dumbbell Decline Press", "Chest");
-        workout.put("Dumbbell Push Up", "Chest");
-        workout.put("Dumbbell Incline Push Up", "Chest");
-        workout.put("Dumbbell Decline Push Up", "Chest");
-        workout.put("Dumbbell Pullover", "Chest");
-        workout.put("Dumbbell Incline Pullover", "Chest");
-        workout.put("Dumbbell Decline Pullover", "Chest");
-        workout.put("Dumbbell Fly", "Chest");
-        workout.put("Dumbbell Incline Fly", "Chest");
-        workout.put("Dumbbell Decline Fly", "Chest");
-        workout.put("Dumbbell Press", "Chest");
-        workout.put("Dumbbell Incline Press", "Chest");
-        workout.put("Dumbbell Decline Press", "Chest");
-        workout.put("Dumbbell Push Up", "Chest");
-        workout.put("Dumbbell Incline Push Up", "Chest");
-        workout.put("Dumbbell Decline Push Up", "Chest");
-        workout.put("Dumbbell Pullover", "Chest");
+    public Workout(String name, String target, List<String> secondaryMuscles, String gifUrl) {
+        this.name = name;
+        this.target = target;
+        this.secondaryMuscles = secondaryMuscles;
+        this.gifUrl = gifUrl;
     }
 
+    public String getWholeWorkout() {
+        // Generate HTML content for display
+        StringBuilder result = new StringBuilder("<html><b>Workout Name:</b> " + name +
+                "<br><b>Primary Muscle:</b> " + target +
+                "<br><b>Secondary Muscles:</b> ");
+        for (String muscle : secondaryMuscles) {
+            result.append(muscle).append(", ");
+        }
+        result.append("<br><b>Visual:</b> ");
+        result.append("<img src='").append(gifUrl).append("'><br><br></html>");
+
+        return result.toString();
+    }
 }
