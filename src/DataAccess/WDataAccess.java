@@ -10,4 +10,9 @@ public class WDataAccess implements WorkoutDataAccessInterface {
     public Workout getworkout(ArrayList<String> muscles) {
         return null;
     }
+
+    @Override
+    public Workout getworkout(String name) {
+        return null;
+    }
 }

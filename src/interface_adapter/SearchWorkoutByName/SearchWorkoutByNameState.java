@@ -1,7 +1,4 @@
-package interface_adapter;
-
-import java.util.ArrayList;
-import java.util.List;
+package interface_adapter.SearchWorkoutByName;
 
 public class SearchWorkoutByNameState {
     private static String workoutname = "";

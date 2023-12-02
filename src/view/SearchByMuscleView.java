@@ -107,6 +107,7 @@ public class SearchByMuscleView extends JPanel implements ActionListener, Proper
         Done.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(Done)) {
+                    muscleList.setSelectedIndices(new int[0]);
                     viewManagerModel.setActiveView(workoutViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }

@@ -2,7 +2,7 @@ package app;
 
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
 import interface_adapter.SearchByMuscle.SearchByMuscleViewModel;
-import interface_adapter.SearchWorkoutByNameViewModel;
+import interface_adapter.SearchWorkoutByName.SearchWorkoutByNameViewModel;
 import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.Workout.WorkoutViewModel;
 import interface_adapter.ViewManagerModel;
@@ -49,7 +49,7 @@ public class Main {
         SearchByMuscleView searchByMuscleView = SearchByMuscleUseCaseFactory.create(searchByMuscleViewModel, workoutViewModel, viewManagerModel, application);
         views.add(searchByMuscleView, searchByMuscleView.viewName);
 
-        SearchWorkoutByNameView searchWorkoutByNameView = SearchWorkoutByNameUseCaseFactory.create(searchWorkoutByNameViewModel, viewManagerModel, workoutViewModel);
+        SearchWorkoutByNameView searchWorkoutByNameView = SearchWorkoutByNameUseCaseFactory.create(searchWorkoutByNameViewModel, viewManagerModel, workoutViewModel, application);
         views.add(searchWorkoutByNameView, searchWorkoutByNameView.viewName);
 
         viewManagerModel.setActiveView(startPageView.viewName);

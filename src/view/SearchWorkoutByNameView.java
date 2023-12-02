@@ -2,16 +2,13 @@ package view;
 
 import interface_adapter.RecipePageViewModel.RecipePageState;
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
-import interface_adapter.RecipeDoneButton.RecipeDoneController;
-import interface_adapter.RecipeSearchButton.RecipeSearchButtonController;
-import interface_adapter.SearchWorkoutByNameState;
-import interface_adapter.SearchWorkoutByNameViewModel;
+import interface_adapter.SearchWorkoutByName.SearchWorkoutByNameController;
+import interface_adapter.SearchWorkoutByName.SearchWorkoutByNameState;
+import interface_adapter.SearchWorkoutByName.SearchWorkoutByNameViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.Workout.WorkoutViewModel;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,8 +16,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SearchWorkoutByNameView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "Workout Name Search View";
@@ -33,7 +28,7 @@ public class SearchWorkoutByNameView extends JPanel implements ActionListener, P
     private final JButton Done;
 
 
-    public SearchWorkoutByNameView(SearchWorkoutByNameViewModel searchWorkoutByNameViewModel, ViewManagerModel viewManagerModel, WorkoutViewModel workoutViewModel) {
+    public SearchWorkoutByNameView(SearchWorkoutByNameViewModel searchWorkoutByNameViewModel, ViewManagerModel viewManagerModel, WorkoutViewModel workoutViewModel, SearchWorkoutByNameController searchWorkoutByNameController) {
         this.searchWorkoutByNameViewModel = searchWorkoutByNameViewModel;
         this.searchWorkoutByNameViewModel.addPropertyChangeListener(this);
 
@@ -53,6 +48,14 @@ public class SearchWorkoutByNameView extends JPanel implements ActionListener, P
         buttons.add(Done);
 
 
+        // Set a larger font for the input field
+        Font largerFont = new Font(workoutnameInputField.getFont().getName(), Font.PLAIN, 16);
+        workoutnameInputField.setFont(largerFont);
+
+        // Set the input field size and alignment
+        workoutnameInputField.setPreferredSize(new Dimension(300, 40));
+
+
 
 
 
@@ -60,7 +63,8 @@ public class SearchWorkoutByNameView extends JPanel implements ActionListener, P
         search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(search)) {
-                    // TODO: Add the controller
+                    SearchWorkoutByNameState currentState = searchWorkoutByNameViewModel.getState();
+                    searchWorkoutByNameController.execute(currentState.getworkoutname());
                 }
             }
         });
@@ -83,6 +87,10 @@ public class SearchWorkoutByNameView extends JPanel implements ActionListener, P
         Done.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(Done)) {
+                    SearchWorkoutByNameState currentState = searchWorkoutByNameViewModel.getState();
+                    currentState.setworkoutname("");
+                    searchWorkoutByNameViewModel.setState(currentState);
+                    searchWorkoutByNameViewModel.firePropertyChanged();
                     viewManagerModel.setActiveView(workoutViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }
@@ -110,9 +118,12 @@ public class SearchWorkoutByNameView extends JPanel implements ActionListener, P
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
+        this.add(Box.createVerticalGlue());  // Adds flexible space
         this.add(workoutnameinfo);
+        this.add(Box.createVerticalStrut(20));  // Adds flexible space
         this.add(buttons);
     }
+
 
 
 
@@ -124,12 +135,12 @@ public class SearchWorkoutByNameView extends JPanel implements ActionListener, P
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        RecipePageState state = (RecipePageState) evt.getNewValue();
+        SearchWorkoutByNameState state = (SearchWorkoutByNameState) evt.getNewValue();
         setFields(state);
     }
 
-    private void setFields(RecipePageState state) {
-        workoutnameInputField.setText(state.getRecipename());
+    private void setFields(SearchWorkoutByNameState state) {
+        workoutnameInputField.setText(state.getworkoutname());
 
     }
 }
