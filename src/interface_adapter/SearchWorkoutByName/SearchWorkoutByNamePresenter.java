@@ -21,7 +21,7 @@ public class SearchWorkoutByNamePresenter implements SearchWorkoutByNameOutputBo
         editorPane.setContentType("text/html");
         editorPane.setEditable(false);
 
-        StringBuilder htmlContent = new StringBuilder("<html>");
+        StringBuilder htmlContent = new StringBuilder("<html><div style='text-align:center; font-family: Arial, sans-serif;'>");
 
         // Iterate through the list of workouts and append information
         for (Workout workout : workouts) {
@@ -29,20 +29,20 @@ public class SearchWorkoutByNamePresenter implements SearchWorkoutByNameOutputBo
 
             // Append the workout information to the HTML content
             htmlContent.append(wholeWorkout);
-            // No need for additional line breaks here if you're using <br> in wholeWorkout
 
-            // Add some space between workouts
-            htmlContent.append("<br><br>");
+            // Add a horizontal line between workouts
+            htmlContent.append("<hr>");
+
+            // Add some space after the horizontal line
+            htmlContent.append("<br>");
         }
 
         // remove all the </html> tags
         htmlContent = new StringBuilder(htmlContent.toString().replaceAll("</html>", ""));
 
-
         // Close the HTML document
-        htmlContent.append("</html>");
+        htmlContent.append("</div></html>");
 
-        // remove all the </html> tags beside the one at the front and end
         // Set the HTML content to the JEditorPane
         editorPane.setText(htmlContent.toString());
 
@@ -66,11 +66,6 @@ public class SearchWorkoutByNamePresenter implements SearchWorkoutByNameOutputBo
 
     @Override
     public void PresentNotFound() {
-<<<<<<< HEAD
         JOptionPane.showMessageDialog(view, "A Workout With That Name Does Not Exist. Please Try Again.", "Error", JOptionPane.ERROR_MESSAGE);
-=======
-        JOptionPane.showMessageDialog(view, String.format("A Workout With That Name Does Not Exist!!! Please Try Again."));
-
->>>>>>> refs/remotes/origin/main
     }
 }

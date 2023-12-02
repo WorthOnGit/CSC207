@@ -23,7 +23,7 @@ public class Workout {
         for (String muscle : secondaryMuscles) {
             result.append(muscle).append(", ");
         }
-        result.append("<br><b>Visual:</b> ");
+        result.append("<br><b></b> ");
         result.append("<img src='").append(gifUrl).append("'><br><br></html>");
 
         return result.toString();
