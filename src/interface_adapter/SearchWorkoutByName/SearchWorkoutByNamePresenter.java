@@ -28,7 +28,7 @@ public class SearchWorkoutByNamePresenter implements SearchWorkoutByNameOutputBo
 
     @Override
     public void PresentNotFound() {
-        JOptionPane.showMessageDialog(view, String.format("A Workout With That Name Does Not Exist Sadly!!! Please Try Again."));
+        JOptionPane.showMessageDialog(view, String.format("A Workout With That Name Does Not Exist!!! Please Try Again."));
 
     }
 }
