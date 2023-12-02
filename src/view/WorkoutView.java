@@ -1,7 +1,7 @@
 package view;
 
 import interface_adapter.SearchByMuscle.SearchByMuscleViewModel;
-import interface_adapter.SearchWorkoutByNameViewModel;
+import interface_adapter.SearchWorkoutByName.SearchWorkoutByNameViewModel;
 import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.Workout.WorkoutViewModel;

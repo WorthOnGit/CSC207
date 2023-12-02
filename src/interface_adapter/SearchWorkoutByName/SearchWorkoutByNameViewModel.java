@@ -1,6 +1,6 @@
-package interface_adapter;
+package interface_adapter.SearchWorkoutByName;
 
-import interface_adapter.SearchWorkoutByNameState;
+import interface_adapter.SearchWorkoutByName.SearchWorkoutByNameState;
 import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
