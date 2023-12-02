@@ -34,16 +34,34 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
         JLabel title = new JLabel(StartPageViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // Image panel in the center
+        JPanel imagePanel = new JPanel();
+        ImageIcon imageIcon = new ImageIcon("C:\\Users\\muaawiz\\IdeaProjects\\CSC207Muaawiz\\src\\kong-fitness-logo-by-collin-bigart-dribbble.png");
+        Image scaledImage = imageIcon.getImage().getScaledInstance(400, 300, Image.SCALE_SMOOTH);
+        ImageIcon scaledImageIcon = new ImageIcon(scaledImage);
+        JLabel imageLabel = new JLabel(scaledImageIcon);
+        imagePanel.add(imageLabel);
 
-        JPanel buttons = new JPanel();
+
+        JPanel button1 = new JPanel();
+        JPanel button2 = new JPanel();
+
         recipe_search = new JButton(StartPageViewModel.recipe_search_BUTTON_LABEL);
-        buttons.add(recipe_search);
+        recipe_search.setPreferredSize(new Dimension(200, 100));
+        button1.add(recipe_search);
+
         plan_meal = new JButton(StartPageViewModel.plan_meal_BUTTON_LABEL);
-        buttons.add(plan_meal);
+        plan_meal.setPreferredSize(new Dimension(200, 100));
+        button1.add(plan_meal);
+
+
         calorie_count = new JButton(StartPageViewModel.Calorie_counter_BUTTON_LABEL);
-        buttons.add(calorie_count);
+        calorie_count.setPreferredSize(new Dimension(200, 100));
+        button2.add(calorie_count);
+
         workout_search = new JButton(StartPageViewModel.Workout_BUTTON_LABEL);
-        buttons.add(workout_search);
+        workout_search.setPreferredSize(new Dimension(200, 100));
+        button2.add(workout_search);
 
         recipe_search.addActionListener(
                 new ActionListener() {
@@ -96,10 +114,12 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
 
 
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BorderLayout());
 
-        this.add(title);
-        this.add(buttons);
+        this.add(title, BorderLayout.NORTH);
+        this.add(imagePanel, BorderLayout.CENTER);
+        this.add(button1, BorderLayout.NORTH);
+        this.add(button2, BorderLayout.SOUTH);
     }
 
     /**
