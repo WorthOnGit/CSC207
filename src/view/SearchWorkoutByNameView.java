@@ -63,7 +63,8 @@ public class SearchWorkoutByNameView extends JPanel implements ActionListener, P
         search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(search)) {
-                    // TODO: Add the controller
+                    SearchWorkoutByNameState currentState = searchWorkoutByNameViewModel.getState();
+                    searchWorkoutByNameController.execute(currentState.getworkoutname());
                 }
             }
         });
@@ -86,6 +87,10 @@ public class SearchWorkoutByNameView extends JPanel implements ActionListener, P
         Done.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(Done)) {
+                    SearchWorkoutByNameState currentState = searchWorkoutByNameViewModel.getState();
+                    currentState.setworkoutname("");
+                    searchWorkoutByNameViewModel.setState(currentState);
+                    searchWorkoutByNameViewModel.firePropertyChanged();
                     viewManagerModel.setActiveView(workoutViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }
@@ -130,12 +135,12 @@ public class SearchWorkoutByNameView extends JPanel implements ActionListener, P
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        RecipePageState state = (RecipePageState) evt.getNewValue();
+        SearchWorkoutByNameState state = (SearchWorkoutByNameState) evt.getNewValue();
         setFields(state);
     }
 
-    private void setFields(RecipePageState state) {
-        workoutnameInputField.setText(state.getRecipename());
+    private void setFields(SearchWorkoutByNameState state) {
+        workoutnameInputField.setText(state.getworkoutname());
 
     }
 }
