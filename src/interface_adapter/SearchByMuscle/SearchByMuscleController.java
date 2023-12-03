@@ -16,4 +16,7 @@ public class SearchByMuscleController {
             searchByMuscleInputBoundary.execute(muscle);
         }
 
+    public void handleNoMusclesSelected() {
+        searchByMuscleInputBoundary.handleNoMusclesSelected();
+    }
 }

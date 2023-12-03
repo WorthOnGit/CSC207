@@ -28,9 +28,14 @@ public class SearchWorkoutByNameInteractor implements SearchWorkoutByNameInputBo
             // Modify this line to receive a list of workouts
             List<Workout> workouts = workoutDataAccessInterface.getworkout(name, "", "", "");
 
-            // Pass the list of workouts to the output boundary
-            outputBoundary.Presentworkouts((ArrayList<Workout>) workouts);
+            if (workouts.isEmpty()) {
+                outputBoundary.PresentNotFound();
+            } else {
+                // Pass the list of workouts to the output boundary
+                outputBoundary.Presentworkouts((ArrayList<Workout>) workouts);
+            }
         } catch (Exception e) {
+            e.printStackTrace();
             outputBoundary.PresentNotFound();
         }
     }

@@ -4,6 +4,7 @@ import entity.Workout;
 import use_case.WorkoutDataAccessInterface;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SearchByMuscleInteractor implements SearchByMuscleInputBoundary {
 
@@ -18,11 +19,26 @@ public class SearchByMuscleInteractor implements SearchByMuscleInputBoundary {
 
     @Override
     public void execute(ArrayList<String> muscles) {
-        if (muscles.size() == 0) {
+        if (muscles.isEmpty()) {
             output.Presentnoneselected();
         } else {
-            Workout workout = workoutDataAccessInterface.getworkout1(muscles);
-            output.Presentworkout(workout);
+            // Initialize workouts as a List instead of ArrayList
+            List<Workout> workouts = new ArrayList<>();
+
+            // Assuming you want to fetch workouts for each muscle individually
+            for (String muscle : muscles) {
+                List<Workout> muscleWorkouts = workoutDataAccessInterface.getworkout1(muscle);
+                workouts.addAll(muscleWorkouts);
+            }
+
+            // Present all workouts together
+            output.Presentworkout((ArrayList<Workout>) workouts);
         }
     }
+
+    @Override
+    public void handleNoMusclesSelected() {
+        output.Presentnoneselected();
+    }
 }
+
