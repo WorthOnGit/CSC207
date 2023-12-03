@@ -3,7 +3,7 @@ package view;
 import interface_adapter.RecipePageViewModel.RecipePageState;
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
 import interface_adapter.RecipeDoneButton.RecipeDoneController;
-import interface_adapter.RecipeSearchButtonController;
+import interface_adapter.RecipeSearchButton.RecipeSearchButtonController;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -66,6 +66,7 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
         caloriesSlider.setMajorTickSpacing(500);
         caloriesSlider.setPaintTicks(true);
         caloriesSlider.setPaintLabels(true);
+        caloriesSlider.setValue(1500);
 
         LabelTextPanel recipenameinfo = new LabelTextPanel(
                 new JLabel(RecipePageViewModel.RECIPE_NAME_LABEL), recipenameInputField);
@@ -158,7 +159,7 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
                 if (evt.getSource().equals(clear)) {
                     RecipePageState currentState = recipePageViewModel.getState();
                     currentState.setRecipename("");
-                    currentState.setCalories(0);
+                    currentState.setCalories(1500);
                     currentState.setCountryoforigin("World");
                     currentState.setmealtype("any");
                     currentState.setDietLabels(new ArrayList<>());

@@ -3,7 +3,10 @@ package app;
 import DataAccess.FileUserDataAccessObject;
 import entity.CommonUserFactory;
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
+import interface_adapter.SearchByMuscle.SearchByMuscleViewModel;
+import interface_adapter.SearchWorkoutByName.SearchWorkoutByNameViewModel;
 import interface_adapter.StartPage.StartPageViewModel;
+import interface_adapter.Workout.WorkoutViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
@@ -34,6 +37,7 @@ public class Main {
 
         StartPageViewModel startPageViewModel = new StartPageViewModel();
         RecipePageViewModel recipePageViewModel = new RecipePageViewModel();
+
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
@@ -45,10 +49,14 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        WorkoutViewModel workoutViewModel = new WorkoutViewModel();
+        SearchByMuscleViewModel searchByMuscleViewModel = new SearchByMuscleViewModel();
+        SearchWorkoutByNameViewModel searchWorkoutByNameViewModel = new SearchWorkoutByNameViewModel();
+
         RecipePageView recipePageView = RecipeSearchUseCaseFactory.create(viewManagerModel, recipePageViewModel, startPageViewModel, application);
         views.add(recipePageView, recipePageView.viewName);
 
-        StartPageView startPageView = StartPageUseCaseFactory.create(viewManagerModel, startPageViewModel, recipePageViewModel);
+        StartPageView startPageView = StartPageUseCaseFactory.create(viewManagerModel, startPageViewModel, recipePageViewModel, workoutViewModel);
         views.add(startPageView, startPageView.viewName);
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
@@ -59,6 +67,15 @@ public class Main {
 
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
         views.add(loggedInView, loggedInView.viewName);
+
+        WorkoutView workoutView = new WorkoutView(workoutViewModel, viewManagerModel, startPageViewModel, searchByMuscleViewModel, searchWorkoutByNameViewModel);
+        views.add(workoutView, workoutView.viewName);
+
+        SearchByMuscleView searchByMuscleView = SearchByMuscleUseCaseFactory.create(searchByMuscleViewModel, workoutViewModel, viewManagerModel, application);
+        views.add(searchByMuscleView, searchByMuscleView.viewName);
+
+        SearchWorkoutByNameView searchWorkoutByNameView = SearchWorkoutByNameUseCaseFactory.create(searchWorkoutByNameViewModel, viewManagerModel, workoutViewModel, application);
+        views.add(searchWorkoutByNameView, searchWorkoutByNameView.viewName);
 
         viewManagerModel.setActiveView(startPageView.viewName);
         viewManagerModel.firePropertyChanged();

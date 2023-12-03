@@ -19,6 +19,9 @@ public class StartPageViewModel extends ViewModel {
 
     public static final String login_BUTTON_LABEL = "Login";
 
+    public static final String Workout_BUTTON_LABEL = "Workout Search";
+
+
     private StartPageState state = new StartPageState();
 
     public StartPageViewModel() {
