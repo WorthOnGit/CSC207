@@ -25,6 +25,10 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
 
     private final JButton calorie_count;
 
+    private final JButton sign_up;
+
+    private final JButton login;
+
 
     public StartPageView(StartPageViewModel signupViewModel, interface_adapter.StartPage.RecipePageButton.RecipeSearchController recipeSearchController, WorkoutViewModel workoutViewModel, ViewManagerModel viewManagerModel) {
         this.StartPageViewModel = signupViewModel;
@@ -47,6 +51,11 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
         JPanel button2 = new JPanel();
 
         recipe_search = new JButton(StartPageViewModel.recipe_search_BUTTON_LABEL);
+        buttons.add(recipe_search);
+      
+        plan_meal = new JButton(interface_adapter.StartPage.StartPageViewModel.plan_meal_BUTTON_LABEL);
+        buttons.add(plan_meal);
+
         recipe_search.setPreferredSize(new Dimension(200, 100));
         button1.add(recipe_search);
 
@@ -62,6 +71,13 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
         workout_search = new JButton(StartPageViewModel.Workout_BUTTON_LABEL);
         workout_search.setPreferredSize(new Dimension(200, 100));
         button2.add(workout_search);
+
+        sign_up = new JButton(StartPageViewModel.sign_up_BUTTON_LABEL);
+        buttons.add(sign_up);
+
+        login = new JButton(StartPageViewModel.login_BUTTON_LABEL);
+        buttons.add(login);
+
 
         recipe_search.addActionListener(
                 new ActionListener() {
@@ -92,12 +108,32 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(calorie_count)) {
-
                         }
 
                     }
                 }
         );
+
+        sign_up.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(e.getSource().equals(sign_up)){
+                    }
+                }
+            }
+        );
+
+        login.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(e.getSource().equals(login)){
+
+                        }
+                    }
+                }
+
 
         workout_search.addActionListener(
                 new ActionListener() {
