@@ -38,6 +38,7 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
         JLabel title = new JLabel(StartPageViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        JPanel buttons = new JPanel();
         // Image panel in the center
         JPanel imagePanel = new JPanel();
         ImageIcon imageIcon = new ImageIcon("src/studio_logo_5474_delhi.png");
@@ -52,9 +53,7 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
 
         recipe_search = new JButton(StartPageViewModel.recipe_search_BUTTON_LABEL);
         buttons.add(recipe_search);
-      
-        plan_meal = new JButton(interface_adapter.StartPage.StartPageViewModel.plan_meal_BUTTON_LABEL);
-        buttons.add(plan_meal);
+
 
         recipe_search.setPreferredSize(new Dimension(200, 100));
         button1.add(recipe_search);
@@ -119,9 +118,9 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if(e.getSource().equals(sign_up)){
+                        }
                     }
                 }
-            }
         );
 
         login.addActionListener(
@@ -133,20 +132,21 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
                         }
                     }
                 }
-
-
-        workout_search.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (e.getSource().equals(workout_search)) {
-                            viewManagerModel.setActiveView(workoutViewModel.getViewName());
-                            viewManagerModel.firePropertyChanged();
-                        }
-
-                    }
-                }
         );
+
+
+                workout_search.addActionListener(
+                        new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                if (e.getSource().equals(workout_search)) {
+                                    viewManagerModel.setActiveView(workoutViewModel.getViewName());
+                                    viewManagerModel.firePropertyChanged();
+                                }
+
+                            }
+                        }
+                );
 
 
 
