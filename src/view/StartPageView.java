@@ -36,7 +36,7 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
 
         // Image panel in the center
         JPanel imagePanel = new JPanel();
-        ImageIcon imageIcon = new ImageIcon("C:\\Users\\muaawiz\\IdeaProjects\\CSC207Muaawiz\\src\\kong-fitness-logo-by-collin-bigart-dribbble.png");
+        ImageIcon imageIcon = new ImageIcon("src/studio_logo_5474_delhi.png");
         Image scaledImage = imageIcon.getImage().getScaledInstance(400, 300, Image.SCALE_SMOOTH);
         ImageIcon scaledImageIcon = new ImageIcon(scaledImage);
         JLabel imageLabel = new JLabel(scaledImageIcon);

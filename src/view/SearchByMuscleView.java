@@ -37,23 +37,28 @@ public class SearchByMuscleView extends JPanel implements ActionListener, Proper
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Create a JList for health labels
-        String[] musclelabels = {"Abductors", "Abs", "Adductors",
-                "Biceps",
-                "Calves", "Chest",
-                "Forearms",
-                "Glutes",
-                "Hamstrings", "Hip Flexors",
-                "IT Band",
-                "Lats", "Lower Back",
-                "Middle Back",
-                "Neck",
-                "Obliques",
-                "Palmer Fascia", "Plantar Fascia",
-                "Quads",
-                "Shoulders",
-                "Traps", "Triceps"
-                ,"Upper Back"
-                };
+        String[] musclelabels = {
+                "abductors",
+                "abs",
+                "adductors",
+                "biceps",
+                "calves",
+                "cardiovascular system",
+                "delts",
+                "forearms",
+                "glutes",
+                "hamstrings",
+                "lats",
+                "levator scapulae",
+                "pectorals",
+                "quads",
+                "serratus anterior",
+                "spine",
+                "traps",
+                "triceps",
+                "upper back"
+        };
+
 
         muscleList = new JList<>(musclelabels);
         muscleList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -83,11 +88,15 @@ public class SearchByMuscleView extends JPanel implements ActionListener, Proper
         search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(search)) {
-                    searchByMuscleController.execute((ArrayList) muscleList.getSelectedValuesList());
-                    System.out.println(muscleList.getSelectedValuesList());
+                    Object selectedValues = muscleList.getSelectedValuesList();
 
-
-
+                    if (selectedValues instanceof ArrayList) {
+                        searchByMuscleController.execute((ArrayList<String>) selectedValues);
+                        System.out.println((ArrayList<String>) selectedValues);
+                    } else {
+                        // Handle the case where nothing is selected
+                        searchByMuscleController.handleNoMusclesSelected();
+                    }
                 }
             }
         });

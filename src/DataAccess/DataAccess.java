@@ -35,8 +35,7 @@ public class DataAccess implements RecipeDataAccessInterface {
         String recipename = RecipePageState.getRecipename().replace(" ", "%20");
         String countryoforigin = RecipePageState.getCountryoforigin().replace(" ", "%");
         Integer cal = RecipePageState.getCalories();
-        String mealtype = //first letter should be capital
-                RecipePageState.getmealtype().substring(0, 1).toUpperCase() + RecipePageState.getmealtype().substring(1).toLowerCase();
+
         StringBuilder dietLabelsUrl = new StringBuilder();
         for (String dietLabel : // dietLabels from RecipePageState
                 RecipePageState.getDietLabels()) {
@@ -56,25 +55,56 @@ public class DataAccess implements RecipeDataAccessInterface {
             cal = 3000;
         }
 
+        HttpRequest request;
 
+        if (RecipePageState.getmealtype() == null && countryoforigin == null) {
+            request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://api.edamam.com/api/recipes/v2?type=public&q=" + recipename +
+                            "&app_id=46fc17af&app_key=de222735d9046e67f7dff62e54ff616f" + dietLabelsUrl +
+                            healthLabelsUrl.toString() + "&calories=" + cal))
+                    .header("app_id", "46fc17af")
+                    .header("app_key", "de222735d9046e67f7dff62e54ff616f")
+                    .method("GET", HttpRequest.BodyPublishers.noBody())
+                    .build();
+        } else if (RecipePageState.getmealtype() == null) {
+            request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://api.edamam.com/api/recipes/v2?type=public&q=" + recipename +
+                            "&app_id=46fc17af&app_key=de222735d9046e67f7dff62e54ff616f" + dietLabelsUrl +
+                            healthLabelsUrl.toString() + "&countryoforigin=" + countryoforigin + "&calories=" + cal))
+                    .header("app_id", "46fc17af")
+                    .header("app_key", "de222735d9046e67f7dff62e54ff616f")
+                    .method("GET", HttpRequest.BodyPublishers.noBody())
+                    .build();
+        } else if (countryoforigin == null) {
+            request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://api.edamam.com/api/recipes/v2?type=public&q=" + recipename +
+                            "&app_id=46fc17af&app_key=de222735d9046e67f7dff62e54ff616f" + dietLabelsUrl +
+                            healthLabelsUrl.toString() + "&mealtype=" + RecipePageState.getmealtype() + "&calories=" + cal))
+                    .header("app_id", "46fc17af")
+                    .header("app_key", "de222735d9046e67f7dff62e54ff616f")
+                    .method("GET", HttpRequest.BodyPublishers.noBody())
+                    .build();
+        } else {
+            request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://api.edamam.com/api/recipes/v2?type=public&q=" + recipename +
+                            "&app_id=46fc17af&app_key=de222735d9046e67f7dff62e54ff616f" + dietLabelsUrl +
+                            healthLabelsUrl.toString() + "&countryoforigin=" + countryoforigin +
+                            "&mealtype=" + RecipePageState.getmealtype() + "&calories=" + cal))
+                    .header("app_id", "46fc17af")
+                    .header("app_key", "de222735d9046e67f7dff62e54ff616f")
+                    .method("GET", HttpRequest.BodyPublishers.noBody())
+                    .build();
+        }
 
+        HttpResponse<String> response;
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://api.edamam.com/api/recipes/v2?type=public&q=" + recipename + "&app_id=46fc17af&app_key=de222735d9046e67f7dff62e54ff616f" + dietLabelsUrl.toString() +
-                        healthLabelsUrl.toString() + "&cuisineType=" + countryoforigin + "&mealtype=" + RecipePageState.getmealtype() + "&calories=" + cal))
-                .header("app_id", "46fc17af")
-                .header("app_key", "de222735d9046e67f7dff62e54ff616f")
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
-
-        HttpResponse<String> response = null;
         try {
             response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        //print request
+        // Print request
         System.out.println(request);
 
         // Parse JSON response

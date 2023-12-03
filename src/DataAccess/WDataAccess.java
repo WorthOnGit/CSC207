@@ -59,12 +59,101 @@ public class WDataAccess implements WorkoutDataAccessInterface {
 
     public static ArrayList<WorkoutInfo> getWorkoutInfo(String workoutName) throws IOException, InterruptedException {
         // Replace whitespaces with %20
+        //lowercase the workout name
+        workoutName = workoutName.toLowerCase();
         String formattedWorkoutName = workoutName.replace(" ", "%20");
 
         try {
             // Send the request
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("https://exercisedb.p.rapidapi.com/exercises/name/" + formattedWorkoutName + "?limit=10"))
+                    .header("X-RapidAPI-Key", "be4d3f9924msh198990d307e91cbp138e82jsn05a9175436f1")
+                    .header("X-RapidAPI-Host", "exercisedb.p.rapidapi.com")
+                    .method("GET", HttpRequest.BodyPublishers.noBody())
+                    .build();
+
+            HttpResponse<String> response = null;
+            try {
+                response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            // Parse the JSON array and extract exercise data
+            JsonParser parser = new JsonParser();
+            JsonArray exercisesArray = parser.parse(response.body()).getAsJsonArray();
+
+            // Create a list to store workout data
+            ArrayList<WorkoutInfo> workoutInfoList = new ArrayList<>();
+
+            // Iterate through the exercises array and extract information
+            for (JsonElement exerciseElement : exercisesArray) {
+                JsonObject exerciseObject = exerciseElement.getAsJsonObject();
+
+                String name = exerciseObject.get("name").getAsString();
+                String target = exerciseObject.get("target").getAsString();
+                String gifUrl = exerciseObject.get("gifUrl").getAsString();
+
+                // Extract secondary muscles as a comma-separated string
+                JsonArray secondaryMusclesArray = exerciseObject.getAsJsonArray("secondaryMuscles");
+                String secondaryMuscles = extractSecondaryMuscles(secondaryMusclesArray);
+
+                // Create a WorkoutInfo object
+                WorkoutInfo workoutInfo = new WorkoutInfo(name, target, secondaryMusclesArray, gifUrl);
+
+                workoutInfoList.add(workoutInfo);
+            }
+
+            return workoutInfoList;
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Override
+    public List<Workout> getworkout1(String muscle) {
+        try {
+            ArrayList<WorkoutInfo> workoutInfoList = getWorkoutInfoByMuscle(muscle);
+
+            // Create a list to store Workout objects
+            List<Workout> workoutList = new ArrayList<>();
+
+            // Iterate through the workoutInfoList and create Workout objects
+            for (WorkoutInfo workoutInfo : workoutInfoList) {
+                String wholeWorkout = "Workout name: " + workoutInfo.getName() +
+                        "\n\nPrimary Muscles: " + workoutInfo.getTarget() +
+                        "\n\nSecondary Muscles: " + workoutInfo.formattedSecondaryMuscles() +
+                        "\n\nGif URL: " + workoutInfo.getGifUrl() + "\n\n\n";
+
+                // Create a Workout object and add it to the list
+                workoutList.add(new Workout(
+                        workoutInfo.getName(),
+                        workoutInfo.getTarget(),
+                        Collections.singletonList(workoutInfo.formattedSecondaryMuscles()),
+                        workoutInfo.getGifUrl()
+                ));
+            }
+
+            // You may want to return the list of Workout objects or a specific one based on your requirements
+            return workoutList;
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            // Handle the exception as needed
+            return Collections.emptyList(); // Return an empty list on error
+        }
+    }
+
+    public static ArrayList<WorkoutInfo> getWorkoutInfoByMuscle(String muscle) throws IOException, InterruptedException {
+        // Replace whitespaces with %20
+        // Lowercase the muscle name
+        muscle = muscle.toLowerCase();
+        String formattedMuscle = muscle.replace(" ", "%20");
+
+        try {
+            // Send the request
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://exercisedb.p.rapidapi.com/exercises/target/" + formattedMuscle + "?limit=10"))
                     .header("X-RapidAPI-Key", "be4d3f9924msh198990d307e91cbp138e82jsn05a9175436f1")
                     .header("X-RapidAPI-Host", "exercisedb.p.rapidapi.com")
                     .method("GET", HttpRequest.BodyPublishers.noBody())
@@ -98,16 +187,13 @@ public class WDataAccess implements WorkoutDataAccessInterface {
             }
 
             return workoutInfoList;
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             throw e;
         }
     }
 
-    @Override
-    public Workout getworkout1(ArrayList<String> muscles){
-        return null;
-    }
+
 
     private static String extractSecondaryMuscles(JsonArray secondaryMusclesArray) {
         StringBuilder secondaryMuscles = new StringBuilder();
