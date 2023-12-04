@@ -1,18 +1,16 @@
 package app;
 
-import DataAccess.WDataAccess;
+import DataAccess.CDataAccess;
 import interface_adapter.CalorieCounter.CalorieCounterController;
 import interface_adapter.CalorieCounter.CalorieCounterPresenter;
 import interface_adapter.CalorieCounter.CalorieCounterViewModel;
-import DataAccess.CDataAccess;
 import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.CalorieCounter.CalorieCounterInputBoundary;
-import use_case.CalorieCounter.CalorieCounterOutputBoundary;
 import use_case.CalorieCounter.CalorieCounterInteractor;
+import use_case.CalorieCounter.CalorieCounterOutputBoundary;
 import use_case.CalorieCounterDataAccessInterface;
 import view.CalorieCounterView;
-
 
 import javax.swing.*;
 
