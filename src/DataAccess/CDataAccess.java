@@ -32,27 +32,10 @@ public class CDataAccess implements CalorieCounterDataAccessInterface {
         if (activity.equals("Very Active Lifestyle")){
             copyactivity = "level_5";}
 
-        // IdealWeight
-        HttpRequest request1 = HttpRequest.newBuilder()
-                .uri(URI.create("https://fitness-calculator.p.rapidapi.com/idealweight?gender=" + gender + "&height="
-                        + height))
-                .header("X-RapidAPI-Key", "246209e3dcmsha75ece2e406c89dp1a52b6jsnb9ce09294696")
-                .header("X-RapidAPI-Host", "fitness-calculator.p.rapidapi.com")
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
-        HttpResponse<String> response1 = HttpClient.newHttpClient().send(request1, HttpResponse.BodyHandlers.ofString());
-
-        // Parse JSON response for IdealWeight
-        JSONObject idealWeightResponse = new JSONObject(response1.body());
-        int hamwiMin = idealWeightResponse.getJSONObject("data").getInt("Hamwi");
-        int hamwiMax = (int)Math.round(hamwiMin * 1.1);  // Assuming a 10% variation, you can adjust this as needed
-
-        String IdealWeight = "Ideal Weight(kg): Range(" + hamwiMin + " - " + hamwiMax + ")";
-        System.out.println("Ideal Weigh(kg)t: Range(" + hamwiMin + " - " + hamwiMax + ")");
-
         // BMI
         HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(URI.create("https://fitness-calculator.p.rapidapi.com/bmi?age=25&weight=65&height=180"))
+                .uri(URI.create("https://fitness-calculator.p.rapidapi.com/bmi?age=" + age + "&weight="
+                        + weight + "&height=" + height))
                 .header("X-RapidAPI-Key", "246209e3dcmsha75ece2e406c89dp1a52b6jsnb9ce09294696")
                 .header("X-RapidAPI-Host", "fitness-calculator.p.rapidapi.com")
                 .method("GET", HttpRequest.BodyPublishers.noBody())
@@ -75,6 +58,25 @@ public class CDataAccess implements CalorieCounterDataAccessInterface {
         BMIinfo.add(HealthyRange);
 
         System.out.println("BMI: " + bmiValue + "\nHealth: " + healthStatus + "\nHealthy BMI Range: " + bmiRange);
+
+        // IdealWeight
+        HttpRequest request1 = HttpRequest.newBuilder()
+                .uri(URI.create("https://fitness-calculator.p.rapidapi.com/idealweight?gender=" + gender + "&height="
+                        + height))
+                .header("X-RapidAPI-Key", "246209e3dcmsha75ece2e406c89dp1a52b6jsnb9ce09294696")
+                .header("X-RapidAPI-Host", "fitness-calculator.p.rapidapi.com")
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+        HttpResponse<String> response1 = HttpClient.newHttpClient().send(request1, HttpResponse.BodyHandlers.ofString());
+
+        // Parse JSON response for IdealWeight
+        JSONObject idealWeightResponse = new JSONObject(response1.body());
+        int hamwiMin = idealWeightResponse.getJSONObject("data").getInt("Hamwi");
+        int hamwiMax = (int)Math.round(hamwiMin * 1.1);  // Assuming a 10% variation, you can adjust this as needed
+
+        String IdealWeight = "Ideal Weight(kg): Range(" + hamwiMin + " - " + hamwiMax + ")";
+        System.out.println("Ideal Weigh(kg)t: Range(" + hamwiMin + " - " + hamwiMax + ")");
+
 
         // BMR and Different Goals
         HttpRequest request = HttpRequest.newBuilder()
