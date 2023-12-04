@@ -42,7 +42,7 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
         // Image panel in the center
         JPanel imagePanel = new JPanel();
         ImageIcon imageIcon = new ImageIcon("src/studio_logo_5474_delhi.png");
-        Image scaledImage = imageIcon.getImage().getScaledInstance(400, 300, Image.SCALE_SMOOTH);
+        Image scaledImage = imageIcon.getImage().getScaledInstance(1500, 600, Image.SCALE_SMOOTH);
         ImageIcon scaledImageIcon = new ImageIcon(scaledImage);
         JLabel imageLabel = new JLabel(scaledImageIcon);
         imagePanel.add(imageLabel);
@@ -55,20 +55,20 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
         buttons.add(recipe_search);
 
 
-        recipe_search.setPreferredSize(new Dimension(200, 100));
+        recipe_search.setPreferredSize(new Dimension(745, 200));
         button1.add(recipe_search);
 
         plan_meal = new JButton(StartPageViewModel.plan_meal_BUTTON_LABEL);
-        plan_meal.setPreferredSize(new Dimension(200, 100));
+        plan_meal.setPreferredSize(new Dimension(745, 200));
         button1.add(plan_meal);
 
 
         calorie_count = new JButton(StartPageViewModel.Calorie_counter_BUTTON_LABEL);
-        calorie_count.setPreferredSize(new Dimension(200, 100));
+        calorie_count.setPreferredSize(new Dimension(745, 200));
         button2.add(calorie_count);
 
         workout_search = new JButton(StartPageViewModel.Workout_BUTTON_LABEL);
-        workout_search.setPreferredSize(new Dimension(200, 100));
+        workout_search.setPreferredSize(new Dimension(745, 200));
         button2.add(workout_search);
 
         sign_up = new JButton(StartPageViewModel.sign_up_BUTTON_LABEL);

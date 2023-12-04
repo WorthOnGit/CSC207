@@ -71,6 +71,13 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
         LabelTextPanel recipenameinfo = new LabelTextPanel(
                 new JLabel(RecipePageViewModel.RECIPE_NAME_LABEL), recipenameInputField);
 
+        // Set a larger font for the input field
+        Font largerFont = new Font(recipenameInputField.getFont().getName(), Font.PLAIN, 24);
+        recipenameInputField.setFont(largerFont);
+
+        // Set the input field size and alignment
+        recipenameInputField.setPreferredSize(new Dimension(250, 40));
+
         LabelSliderPanel caloriesinfo = new LabelSliderPanel(
                 caloriesValueLabel, caloriesSlider);
 
@@ -86,15 +93,12 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
                 new JLabel(RecipePageViewModel.COUSINE_TYPE_LABEL), cuisineTypeComboBox);
 
 
-
         // Create JComboBox for cuisine types
         String[] MealTypes = {"any", "lunch", "dinner", "brunch", "breakfast", "snack"};
 
         MealTypeComboBox = new JComboBox<>(MealTypes);
         LabelComboBoxPanel mealtypeinfo = new LabelComboBoxPanel(
                 new JLabel(RecipePageViewModel.MEAL_TYPE_LABEL), MealTypeComboBox);
-
-
 
 
 
@@ -265,12 +269,17 @@ public class RecipePageView extends JPanel implements ActionListener, PropertyCh
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        JPanel labelPanel = new JPanel();
+
+        labelPanel.add(new LabelScrollPanePanel(new JLabel("Diet Label(Hold CTRL) \n"), dietLabelScrollPane));
+        labelPanel.add(new LabelScrollPanePanel(new JLabel("Health Label(Hold CTRL) \n"), healthLabelScrollPane));
+
         this.add(title);
+        this.add(Box.createRigidArea(new Dimension(0, 40)));
         this.add(recipenameinfo);
         this.add(countryoforigininfo);
         this.add(mealtypeinfo);
-        this.add(new LabelScrollPanePanel(new JLabel("Diet Label(Hold CTRL) \n"), dietLabelScrollPane));
-        this.add(new LabelScrollPanePanel(new JLabel("Health Label(Hold CTRL) \n"), healthLabelScrollPane));
+        this.add(labelPanel);
         this.add(caloriesinfo);
         this.add(buttons);
     }

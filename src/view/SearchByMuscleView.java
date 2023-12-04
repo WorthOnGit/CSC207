@@ -14,16 +14,15 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SearchByMuscleView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "Search By Muscle View";
 
     private final SearchByMuscleViewModel searchByMuscleViewModel;
-
     private final SearchByMuscleController searchByMuscleController;
 
     private final JButton search;
-    private final JButton clear;
     private final JButton Done;
     // JList for diet labels
     private final JList<String> muscleList;
@@ -32,9 +31,6 @@ public class SearchByMuscleView extends JPanel implements ActionListener, Proper
         this.searchByMuscleViewModel = searchByMuscleViewModel;
         this.searchByMuscleController = searchByMuscleController;
         this.searchByMuscleViewModel.addPropertyChangeListener(this);
-
-        JLabel title = new JLabel(searchByMuscleViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Create a JList for health labels
         String[] musclelabels = {
@@ -59,81 +55,66 @@ public class SearchByMuscleView extends JPanel implements ActionListener, Proper
                 "upper back"
         };
 
-
         muscleList = new JList<>(musclelabels);
         muscleList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        muscleList.setFont(new Font(muscleList.getFont().getName(), Font.PLAIN, 60)); // Increased font size for selections
 
         // Create a JScrollPane for the health label list
         JScrollPane musclesScrollPane = new JScrollPane(muscleList);
-        musclesScrollPane.setPreferredSize(new Dimension(200, 300));
-
-
-
-
-
+        musclesScrollPane.setPreferredSize(new Dimension(800, 600)); // Increased size
 
         JPanel buttons = new JPanel();
         search = new JButton(RecipePageViewModel.SEARCH_BUTTON_LABEL);
+        search.setPreferredSize(new Dimension(150, 50));
         buttons.add(search);
-        clear = new JButton("Clear");
-//        buttons.add(clear);
+
         Done = new JButton(RecipePageViewModel.Done_BUTTON_LABEL);
+        Done.setPreferredSize(new Dimension(150, 50));
         buttons.add(Done);
-
-
-
-
-
 
         search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                if (evt.getSource().equals(search)) {
-                    Object selectedValues = muscleList.getSelectedValuesList();
+                List<String> selectedValues = muscleList.getSelectedValuesList();
 
-                    if (selectedValues instanceof ArrayList) {
-                        searchByMuscleController.execute((ArrayList<String>) selectedValues);
-                        System.out.println((ArrayList<String>) selectedValues);
-                    } else {
-                        // Handle the case where nothing is selected
-                        searchByMuscleController.handleNoMusclesSelected();
-                    }
+                if (!selectedValues.isEmpty()) {
+                    searchByMuscleController.execute((ArrayList) selectedValues);
+                    System.out.println(selectedValues);
+                } else {
+                    // Handle the case where nothing is selected
+                    searchByMuscleController.handleNoMusclesSelected();
                 }
             }
         });
 
-
-
-//        // Add a ListSelectionListener to update the value in the RecipePageState when healthLabelList is changed
         muscleList.addListSelectionListener(e -> {
-            SearchByMuscleState currentState = searchByMuscleViewModel.getState();;
+            SearchByMuscleState currentState = searchByMuscleViewModel.getState();
             currentState.setmuscles(muscleList.getSelectedValuesList());
             searchByMuscleViewModel.setState(currentState);
-
-            // Update the label to display the selected health labels
         });
-
 
         Done.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                if (evt.getSource().equals(Done)) {
-                    muscleList.setSelectedIndices(new int[0]);
-                    viewManagerModel.setActiveView(workoutViewModel.getViewName());
-                    viewManagerModel.firePropertyChanged();
-                }
+                muscleList.setSelectedIndices(new int[0]);
+                viewManagerModel.setActiveView(workoutViewModel.getViewName());
+                viewManagerModel.firePropertyChanged();
             }
         });
 
-
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(title);
-        this.add(new LabelScrollPanePanel(new JLabel("Choose Muscle\n"), musclesScrollPane));
+        JLabel thing = new JLabel("Pick One\n");
+        thing.setFont(new Font(thing.getFont().getName(), Font.PLAIN, 40));
+
+        JLabel Title = new JLabel("Search Workout By Muscle\n");
+        Title.setFont(new Font(Title.getFont().getName(), Font.PLAIN, 80));
+        Title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
+        this.add(Title);
+        this.add(Box.createRigidArea(new Dimension(0, 50)));
+        this.add(new LabelScrollPanePanel(thing, musclesScrollPane));
         this.add(buttons);
     }
-
-
-
-
 
     public void actionPerformed(ActionEvent evt) {
         JOptionPane.showConfirmDialog(this, "Cancel not implemented yet.");
