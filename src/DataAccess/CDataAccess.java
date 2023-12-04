@@ -44,11 +44,11 @@ public class CDataAccess implements CalorieCounterDataAccessInterface {
 
         // Parse JSON response for IdealWeight
         JSONObject idealWeightResponse = new JSONObject(response1.body());
-        double hamwiMin = idealWeightResponse.getJSONObject("data").getDouble("Hamwi");
-        double hamwiMax = hamwiMin * 1.1;  // Assuming a 10% variation, you can adjust this as needed
+        int hamwiMin = idealWeightResponse.getJSONObject("data").getInt("Hamwi");
+        int hamwiMax = (int)Math.round(hamwiMin * 1.1);  // Assuming a 10% variation, you can adjust this as needed
 
-        String IdealWeight = "IdealWeight: Range(" + hamwiMin + " - " + hamwiMax + ")";
-        System.out.println("IdealWeight: Range(" + hamwiMin + " - " + hamwiMax + ")");
+        String IdealWeight = "Ideal Weight(kg): Range(" + hamwiMin + " - " + hamwiMax + ")";
+        System.out.println("Ideal Weigh(kg)t: Range(" + hamwiMin + " - " + hamwiMax + ")");
 
         // BMI
         HttpRequest request2 = HttpRequest.newBuilder()
@@ -61,7 +61,7 @@ public class CDataAccess implements CalorieCounterDataAccessInterface {
 
         // Parse JSON response for BMI
         JSONObject bmiResponse = new JSONObject(response2.body());
-        double bmiValue = bmiResponse.getJSONObject("data").getDouble("bmi");
+        int bmiValue = bmiResponse.getJSONObject("data").getInt("bmi");
         String healthStatus = bmiResponse.getJSONObject("data").getString("health");
         String bmiRange = bmiResponse.getJSONObject("data").getString("healthy_bmi_range");
 
@@ -108,7 +108,7 @@ public class CDataAccess implements CalorieCounterDataAccessInterface {
                     JSONObject goalDetailsObj = (JSONObject) goalDetails;
                     String lossWeight = goalDetailsObj.has("loss weight") ? goalDetailsObj.getString("loss weight") : "";
                     String gainWeight = goalDetailsObj.has("gain weight") ? goalDetailsObj.getString("gain weight") : "";
-                    double goalCalories = goalDetailsObj.getDouble("calory");
+                    int goalCalories = goalDetailsObj.getInt("calory");
                     goalsList.add(goal + " (" + (lossWeight.isEmpty() ? gainWeight : lossWeight) + "/week): " + goalCalories + " Calories");
                 } else if (goalDetails instanceof String) {
                     // If the goal is represented as a plain string
