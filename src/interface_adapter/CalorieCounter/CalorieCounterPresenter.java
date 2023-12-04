@@ -4,7 +4,10 @@ import entity.Calculations;
 import use_case.CalorieCounter.CalorieCounterOutputBoundary;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CalorieCounterPresenter implements CalorieCounterOutputBoundary {
 
@@ -14,34 +17,41 @@ public class CalorieCounterPresenter implements CalorieCounterOutputBoundary {
         this.view = view;
     }
 
-    @Override
-    public void presentCalculations(Calculations calculations) {
-        JPanel contentPanel = new JPanel();
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+    private JPanel createComponentPanel(String title, ArrayList<String> data) {
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 10, 5, 10);
 
-        // Create JLabel for each Calculation
-        JLabel idealweight = new JLabel(calculations.getIdealWeight());
-        ArrayList<String> BMIinfo = calculations.getBMI();
-        JLabel bmr = new JLabel(calculations.getBMR());
-        ArrayList<String> weightgoals = calculations.getWeightGoals();
+        // Create Titled Border
+        TitledBorder border = BorderFactory.createTitledBorder(title);
+        panel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(10, 10, 10, 10),
+                border));
 
-
-        // Add labels to the contentPanel
-        contentPanel.add(idealweight);
-        for (int i=0; i < BMIinfo.size(); i++) {
-            String info = BMIinfo.get(i);
-            JLabel charLabel = new JLabel(info);
-            contentPanel.add(charLabel);
-        contentPanel.add(bmr);}
-        for (int i=0; i < weightgoals.size(); i++) {
-            String goal = weightgoals.get(i);
-            JLabel charLabel2 = new JLabel(goal);
-            contentPanel.add(charLabel2);
-
+        // Create JLabels
+        gbc.gridy = 0;
+        for (String info : data) {
+            JLabel label = new JLabel(info);
+            gbc.anchor = GridBagConstraints.WEST;  // Set anchor to left-align
+            panel.add(label, gbc);
+            gbc.gridy++;
         }
 
-        // Set the preferred size for the content panel
+        return panel;
+    }
 
+    @Override
+    public void presentCalculations(Calculations calculations) {
+        JPanel contentPanel = new JPanel(new GridLayout(2, 2, 10, 10));
+
+        // Create and add subpanels for each component
+        contentPanel.add(createComponentPanel("Ideal Weight", new ArrayList<>(Arrays.asList(calculations.getIdealWeight()))));
+        contentPanel.add(createComponentPanel("BMI Information", calculations.getBMI()));
+        contentPanel.add(createComponentPanel("BMR", new ArrayList<>(Arrays.asList(calculations.getBMR()))));
+        contentPanel.add(createComponentPanel("Daily Calorie Intake Based on Objective", calculations.getWeightGoals()));
+
+        // Set the preferred size for the content panel
+        contentPanel.setPreferredSize(new Dimension(600, 500)); // Increase the height
 
         JOptionPane.showMessageDialog(null, contentPanel, "Your Calculations", JOptionPane.INFORMATION_MESSAGE);
     }
