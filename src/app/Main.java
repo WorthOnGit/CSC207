@@ -11,7 +11,12 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.MealPlanner.MealPlanViewModel;
+import interface_adapter.MealPlanner.MealPlanController;
+import DataAccess.MDataAccess;
+import view.MealPlanView;
 import view.*;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -76,6 +81,9 @@ public class Main {
 
         SearchWorkoutByNameView searchWorkoutByNameView = SearchWorkoutByNameUseCaseFactory.create(searchWorkoutByNameViewModel, viewManagerModel, workoutViewModel, application);
         views.add(searchWorkoutByNameView, searchWorkoutByNameView.viewName);
+
+        MealPlanView mealPlanView = MealPlanUseCaseFactory.create(viewManagerModel, application);
+        views.add(mealPlanView, mealPlanView.viewName);
 
         viewManagerModel.setActiveView(startPageView.viewName);
         viewManagerModel.firePropertyChanged();
