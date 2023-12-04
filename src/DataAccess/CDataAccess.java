@@ -1,6 +1,10 @@
 package DataAccess;
-import org.json.JSONObject;
+
+
+// Go to ProjectStructure >> Libraries >> Add New From Maven
+// >> search up org.json and download the most recent one(org.json:json:20231013) and Apply
 import entity.Calculations;
+import org.json.JSONObject;
 import use_case.CalorieCounterDataAccessInterface;
 
 import java.io.IOException;
@@ -13,7 +17,6 @@ import java.util.ArrayList;
 public class CDataAccess implements CalorieCounterDataAccessInterface {
 
     public String copyactivity;
-    private static String WholeCaloriesIdealWeightBMI;
     @Override
     public Calculations getCalculation(int age, int weight, int height, String gender, String activity) throws IOException, InterruptedException {
 
@@ -78,7 +81,7 @@ public class CDataAccess implements CalorieCounterDataAccessInterface {
                 .uri(URI.create("https://fitness-calculator.p.rapidapi.com/dailycalorie?age="
                         + age + "&gender=" + gender +
                         "&height=" + height + "&weight=" +
-                        weight + "&activitylevel=" + copyactivity + ""))
+                        weight + "&activitylevel=" + copyactivity))
                 .header("X-RapidAPI-Key", "246209e3dcmsha75ece2e406c89dp1a52b6jsnb9ce09294696")
                 .header("X-RapidAPI-Host", "fitness-calculator.p.rapidapi.com")
                 .method("GET", HttpRequest.BodyPublishers.noBody())
