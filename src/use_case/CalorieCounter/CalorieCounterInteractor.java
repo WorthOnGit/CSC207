@@ -1,14 +1,10 @@
 package use_case.CalorieCounter;
 
 
-import DataAccess.CDataAccess;
 import entity.Calculations;
-import entity.Recipe;
 import use_case.CalorieCounterDataAccessInterface;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CalorieCounterInteractor implements CalorieCounterInputBoundary{
     private CalorieCounterOutputBoundary outputBoundary;
