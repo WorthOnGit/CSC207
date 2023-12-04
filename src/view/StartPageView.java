@@ -5,6 +5,7 @@ import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.StartPage.StartPageState;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.Workout.WorkoutViewModel;
+import interface_adapter.CalorieCounter.CalorieCounterViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +31,9 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
     private final JButton login;
 
 
-    public StartPageView(StartPageViewModel signupViewModel, interface_adapter.StartPage.RecipePageButton.RecipeSearchController recipeSearchController, WorkoutViewModel workoutViewModel, ViewManagerModel viewManagerModel) {
+    public StartPageView(StartPageViewModel signupViewModel, interface_adapter.StartPage.RecipePageButton.RecipeSearchController recipeSearchController,
+                         WorkoutViewModel workoutViewModel, ViewManagerModel viewManagerModel,
+                            CalorieCounterViewModel calorieCounterViewModel) {
         this.StartPageViewModel = signupViewModel;
         this.RecipeSearchController = recipeSearchController;
         signupViewModel.addPropertyChangeListener(this);
@@ -107,7 +110,8 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(calorie_count)) {
-                        }
+                            viewManagerModel.setActiveView(calorieCounterViewModel.getViewName());
+                            viewManagerModel.firePropertyChanged();}
 
                     }
                 }

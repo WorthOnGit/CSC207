@@ -1,14 +1,10 @@
 package view;
 
-import interface_adapter.RecipePageViewModel.RecipePageState;
-import interface_adapter.RecipePageViewModel.RecipePageViewModel;
-import interface_adapter.SearchByMuscle.SearchByMuscleState;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.StartPage.StartPageViewModel;
-
-import interface_adapter.CalorieCounter.CalorieCounterViewModel;
 import interface_adapter.CalorieCounter.CalorieCounterController;
 import interface_adapter.CalorieCounter.CalorieCounterState;
+import interface_adapter.CalorieCounter.CalorieCounterViewModel;
+import interface_adapter.StartPage.StartPageViewModel;
+import interface_adapter.ViewManagerModel;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -16,18 +12,14 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CalorieCounterView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "Calorie Counter View";
 
-    private final JButton search;
+    private final JButton calculate;
     private final JButton Done;
 
     private final CalorieCounterViewModel calorieCounterViewModel;
@@ -109,16 +101,16 @@ public class CalorieCounterView extends JPanel implements ActionListener, Proper
                 new JLabel(CalorieCounterViewModel.ACTIVITY_LABEL), ActivityComboBox);
 
         JPanel buttons = new JPanel();
-        search = new JButton(CalorieCounterViewModel.SEARCH_BUTTON_LABEL);
-        buttons.add(search);
+        calculate = new JButton(CalorieCounterViewModel.CALCULATE_BUTTON_LABEL);
+        buttons.add(calculate);
         Done = new JButton(CalorieCounterViewModel.Done_BUTTON_LABEL);
         buttons.add(Done);
 
 
         // This Search Button Starts the Use Case
-        search.addActionListener(new ActionListener() {
+        calculate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                if (evt.getSource().equals(search)) {
+                if (evt.getSource().equals(calculate)) {
                     CalorieCounterState currentstate = calorieCounterViewModel.getState();
                     try {
                         calorieCounterController.execute(currentstate.getAge(),
