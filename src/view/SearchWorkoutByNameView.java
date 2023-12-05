@@ -27,38 +27,37 @@ public class SearchWorkoutByNameView extends JPanel implements ActionListener, P
     private final JButton clear;
     private final JButton Done;
 
-
     public SearchWorkoutByNameView(SearchWorkoutByNameViewModel searchWorkoutByNameViewModel, ViewManagerModel viewManagerModel, WorkoutViewModel workoutViewModel, SearchWorkoutByNameController searchWorkoutByNameController) {
         this.searchWorkoutByNameViewModel = searchWorkoutByNameViewModel;
         this.searchWorkoutByNameViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel(searchWorkoutByNameViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Larger font for label and input field
+        Font largerFont = new Font("Arial", Font.PLAIN, 30);
 
-        LabelTextPanel workoutnameinfo = new LabelTextPanel(
-                new JLabel(searchWorkoutByNameViewModel.WORKOUT_NAME_LABEL), workoutnameInputField);
+        JLabel workoutnameLabel = new JLabel(searchWorkoutByNameViewModel.WORKOUT_NAME_LABEL);
+        workoutnameLabel.setFont(largerFont);
+
+        workoutnameInputField.setFont(largerFont);
+
+        LabelTextPanel workoutnameinfo = new LabelTextPanel(workoutnameLabel, workoutnameInputField);
 
 
         JPanel buttons = new JPanel();
-        search = new JButton(RecipePageViewModel.SEARCH_BUTTON_LABEL);
+        search = new JButton("Search"); // Adjusted label for clarity
+        search.setPreferredSize(new Dimension(150, 50));
         buttons.add(search);
         clear = new JButton("Clear");
+        clear.setPreferredSize(new Dimension(150, 50));
         buttons.add(clear);
-        Done = new JButton(RecipePageViewModel.Done_BUTTON_LABEL);
+        Done = new JButton("Done");
+        Done.setPreferredSize(new Dimension(150, 50));
         buttons.add(Done);
 
-
-        // Set a larger font for the input field
-        Font largerFont = new Font(workoutnameInputField.getFont().getName(), Font.PLAIN, 16);
-        workoutnameInputField.setFont(largerFont);
-
-        // Set the input field size and alignment
-        workoutnameInputField.setPreferredSize(new Dimension(300, 40));
-
-
-
-
-
+        // Set a larger font for the buttons
+        Font buttonFont = new Font("Arial", Font.PLAIN, 20);
+        search.setFont(buttonFont);
+        clear.setFont(buttonFont);
+        Done.setFont(buttonFont);
 
         search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -69,7 +68,6 @@ public class SearchWorkoutByNameView extends JPanel implements ActionListener, P
             }
         });
 
-
         clear.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(clear)) {
@@ -77,12 +75,9 @@ public class SearchWorkoutByNameView extends JPanel implements ActionListener, P
                     currentState.setworkoutname("");
                     searchWorkoutByNameViewModel.setState(currentState);
                     searchWorkoutByNameViewModel.firePropertyChanged();
-
                 }
             }
         });
-
-
 
         Done.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -117,17 +112,22 @@ public class SearchWorkoutByNameView extends JPanel implements ActionListener, P
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(title);
+
+        JLabel Title = new JLabel("Search Workout By Muscle\n");
+        Title.setFont(new Font(Title.getFont().getName(), Font.PLAIN, 80));
+        Title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
+        this.add(Title);
         this.add(Box.createVerticalGlue());  // Adds flexible space
         this.add(workoutnameinfo);
         this.add(Box.createVerticalStrut(20));  // Adds flexible space
         this.add(buttons);
+
+        // Center the components
+        workoutnameinfo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttons.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
-
-
-
-
-
 
     public void actionPerformed(ActionEvent evt) {
         JOptionPane.showConfirmDialog(this, "Cancel not implemented yet.");
@@ -141,6 +141,5 @@ public class SearchWorkoutByNameView extends JPanel implements ActionListener, P
 
     private void setFields(SearchWorkoutByNameState state) {
         workoutnameInputField.setText(state.getworkoutname());
-
     }
 }

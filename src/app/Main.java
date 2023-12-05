@@ -2,6 +2,7 @@ package app;
 
 import DataAccess.FileUserDataAccessObject;
 import entity.CommonUserFactory;
+import interface_adapter.CalorieCounter.CalorieCounterViewModel;
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
 import interface_adapter.SearchByMuscle.SearchByMuscleViewModel;
 import interface_adapter.SearchWorkoutByName.SearchWorkoutByNameViewModel;
@@ -11,7 +12,12 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.MealPlanner.MealPlanViewModel;
+import interface_adapter.MealPlanner.MealPlanController;
+import DataAccess.MDataAccess;
+import view.MealPlanView;
 import view.*;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,6 +44,8 @@ public class Main {
         StartPageViewModel startPageViewModel = new StartPageViewModel();
         RecipePageViewModel recipePageViewModel = new RecipePageViewModel();
 
+        CalorieCounterViewModel calorieCounterViewModel = new CalorieCounterViewModel();
+
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
@@ -56,7 +64,7 @@ public class Main {
         RecipePageView recipePageView = RecipeSearchUseCaseFactory.create(viewManagerModel, recipePageViewModel, startPageViewModel, application);
         views.add(recipePageView, recipePageView.viewName);
 
-        StartPageView startPageView = StartPageUseCaseFactory.create(viewManagerModel, startPageViewModel, recipePageViewModel, workoutViewModel);
+        StartPageView startPageView = StartPageUseCaseFactory.create(viewManagerModel, startPageViewModel, recipePageViewModel, workoutViewModel, calorieCounterViewModel);
         views.add(startPageView, startPageView.viewName);
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
@@ -71,11 +79,17 @@ public class Main {
         WorkoutView workoutView = new WorkoutView(workoutViewModel, viewManagerModel, startPageViewModel, searchByMuscleViewModel, searchWorkoutByNameViewModel);
         views.add(workoutView, workoutView.viewName);
 
+        CalorieCounterView calorieCounterView = CalorieCounterUseCaseFactory.create(viewManagerModel, calorieCounterViewModel, startPageViewModel, application);
+        views.add(calorieCounterView, calorieCounterView.viewName);
+
         SearchByMuscleView searchByMuscleView = SearchByMuscleUseCaseFactory.create(searchByMuscleViewModel, workoutViewModel, viewManagerModel, application);
         views.add(searchByMuscleView, searchByMuscleView.viewName);
 
         SearchWorkoutByNameView searchWorkoutByNameView = SearchWorkoutByNameUseCaseFactory.create(searchWorkoutByNameViewModel, viewManagerModel, workoutViewModel, application);
         views.add(searchWorkoutByNameView, searchWorkoutByNameView.viewName);
+
+        MealPlanView mealPlanView = MealPlanUseCaseFactory.create(viewManagerModel, application);
+        views.add(mealPlanView, mealPlanView.viewName);
 
         viewManagerModel.setActiveView(startPageView.viewName);
         viewManagerModel.firePropertyChanged();
