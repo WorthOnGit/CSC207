@@ -1,12 +1,18 @@
 package interface_adapter.RecipeSearchButton;
 
 import entity.Recipe;
+import interface_adapter.login.LoginState;
 import use_case.RecipeSearchButton.RecipeSearchButtonOutputBoundary;
 import view.RecipePageView;
 import view.StartPageView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.StringJoiner;
 import javax.swing.border.EmptyBorder;
 
 public class RecipeSeatchButtonPresenter implements RecipeSearchButtonOutputBoundary {
@@ -15,6 +21,28 @@ public class RecipeSeatchButtonPresenter implements RecipeSearchButtonOutputBoun
     public RecipeSeatchButtonPresenter(JFrame view) {
         this.view = view;
     }
+
+    private void saveRecipeData(Recipe recipe) {
+
+        String csvFile = "./saved_recipes.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile, true))) {
+            // Format data for CSV
+            String data = String.format("%s,%f,%s,%s,%s,%s,%s\n",
+                    recipe.getRecipeName().replaceAll("\n",""),
+                    recipe.getCalories(),
+                    String.join(", ", recipe.getDietLabels().replaceAll("\n","")),
+                    String.join(", ", recipe.getHealthLabels().replaceAll("\n","")),
+                    recipe.getMealType().replaceAll("\n",""),
+                    recipe.getCuisineType().replaceAll("\n",""),
+                    String.join(", ", recipe.getIngredients()).replaceAll("\n",""));
+            writer.write(data);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(view, "Error saving recipe data.");
+        }
+    }
+
 
     @Override
     public void presentrecipe(Recipe recipe) {
@@ -32,21 +60,45 @@ public class RecipeSeatchButtonPresenter implements RecipeSearchButtonOutputBoun
         gbc.anchor = GridBagConstraints.WEST;
         gbc.ipady = 10;
 
-        addLabelAndDetails(detailsPanel, gbc, "Recipe Name:"," " + recipe.getRecipeName() + "\n\n");
-        addLabelAndDetails(detailsPanel, gbc, "Calories:"," " +  String.format("%.2f", recipe.getCalories()) + "\n\n");
-        addLabelAndDetails(detailsPanel, gbc, "Diet Labels:"," " + String.join(", ", recipe.getDietLabels()) + "\n\n");
-        addLabelAndDetails(detailsPanel, gbc, "Health Labels:", " " +  String.join(", ", recipe.getHealthLabels()) + "\n\n");
+        addLabelAndDetails(detailsPanel, gbc, "Recipe Name:", " " + recipe.getRecipeName() + "\n\n");
+        addLabelAndDetails(detailsPanel, gbc, "Calories:", " " + String.format("%.2f", recipe.getCalories()) + "\n\n");
+        addLabelAndDetails(detailsPanel, gbc, "Diet Labels:", " " + String.join(", ", recipe.getDietLabels()) + "\n\n");
+        addLabelAndDetails(detailsPanel, gbc, "Health Labels:", " " + String.join(", ", recipe.getHealthLabels()) + "\n\n");
         addLabelAndDetails(detailsPanel, gbc, "Meal Type:", " " + recipe.getMealType() + "\n\n");
         addLabelAndDetails(detailsPanel, gbc, "Cuisine Type:", " " + recipe.getCuisineType() + "\n\n");
-        addLabelAndDetails(detailsPanel, gbc, "Ingredients:",  " " + String.join(", ", recipe.getIngredients()) + "\n\n");
+        addLabelAndDetails(detailsPanel, gbc, "Ingredients:", " " + String.join(", ", recipe.getIngredients()) + "\n\n");
 
         // Add the detailsPanel to the content panel
         contentPanel.add(new JScrollPane(detailsPanel), BorderLayout.CENTER);
 
-        // Set the preferred size for the content panel
-        contentPanel.setPreferredSize(new Dimension(800, 500));
+        JButton btnSave = new JButton("Save");
+        JButton btnClose = new JButton("Close");
 
-        JOptionPane.showMessageDialog(null, contentPanel, "Recipe Details", JOptionPane.INFORMATION_MESSAGE);
+        btnSave.addActionListener(e -> saveRecipeData(recipe));
+        btnClose.addActionListener(e -> {
+            // Close the dialog
+            Window win = SwingUtilities.getWindowAncestor((Component) e.getSource());
+            if (win != null) {
+                win.dispose();
+            }
+        });
+        Object[] options = {btnClose, btnSave};
+        JOptionPane.showOptionDialog(
+                null,
+                contentPanel,
+                "Recipe Details",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[0]
+        );
+
+
+        // Set the preferred size for the content panel
+//        contentPanel.setPreferredSize(new Dimension(800, 500));
+
+//        JOptionPane.showMessageDialog(null, contentPanel, "Recipe Details", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void addLabelAndDetails(JPanel panel, GridBagConstraints gbc, String label, String details) {

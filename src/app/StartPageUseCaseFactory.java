@@ -5,6 +5,8 @@ import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.*;
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
 import interface_adapter.Workout.WorkoutViewModel;
+import interface_adapter.login.LoginViewModel;
+import interface_adapter.signup.SignupViewModel;
 import use_case.RecipePageButton.RecipeSeachInteractor;
 import use_case.RecipePageButton.RecipeSearchInputBoundary;
 import use_case.RecipePageButton.RecipeSearchOutputBoundary;
@@ -17,9 +19,11 @@ public class StartPageUseCaseFactory {
     private StartPageUseCaseFactory() {}
 
     public static StartPageView create(
-            ViewManagerModel viewManagerModel, StartPageViewModel StartPageViewModel, RecipePageViewModel signupViewModel, WorkoutViewModel workoutViewModel, CalorieCounterViewModel calorieCounterViewModel) {
+
+            ViewManagerModel viewManagerModel, StartPageViewModel StartPageViewModel, RecipePageViewModel signupViewModel, WorkoutViewModel workoutViewModel, LoginViewModel loginViewModel, SignupViewModel viewModel) {
         RecipeSearchController RecipeSearchController = createcontroller(viewManagerModel, signupViewModel);
-        return new StartPageView(StartPageViewModel, RecipeSearchController, workoutViewModel, viewManagerModel, calorieCounterViewModel);
+        return new StartPageView(StartPageViewModel, RecipeSearchController, workoutViewModel, loginViewModel, viewManagerModel, viewModel, calorieCounterViewModel);
+
 
     }
 

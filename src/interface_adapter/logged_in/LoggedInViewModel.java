@@ -1,5 +1,6 @@
 package interface_adapter.logged_in;
 
+import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.ViewModel;
 import interface_adapter.login.LoginState;
 
@@ -12,6 +13,7 @@ public class LoggedInViewModel extends ViewModel {
     private LoggedInState state = new LoggedInState();
 
     public static final String LOGOUT_BUTTON_LABEL = "Log out";
+    public static final String HOMEPAGE_BUTTON_LABEL = "Home Page";
     private String loggedInUser;
 
     public LoggedInViewModel() {
@@ -33,6 +35,7 @@ public class LoggedInViewModel extends ViewModel {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
+
 
     public LoggedInState getState() {
         return state;
