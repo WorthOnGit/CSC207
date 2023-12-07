@@ -2,6 +2,7 @@ package app;
 
 import DataAccess.FileUserDataAccessObject;
 import entity.CommonUserFactory;
+import interface_adapter.CalorieCounter.CalorieCounterViewModel;
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
 import interface_adapter.SearchByMuscle.SearchByMuscleViewModel;
 import interface_adapter.SearchWorkoutByName.SearchWorkoutByNameViewModel;
@@ -43,6 +44,8 @@ public class Main {
         StartPageViewModel startPageViewModel = new StartPageViewModel();
         RecipePageViewModel recipePageViewModel = new RecipePageViewModel();
 
+        CalorieCounterViewModel calorieCounterViewModel = new CalorieCounterViewModel();
+
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
@@ -61,7 +64,9 @@ public class Main {
         RecipePageView recipePageView = RecipeSearchUseCaseFactory.create(viewManagerModel, recipePageViewModel, startPageViewModel, application);
         views.add(recipePageView, recipePageView.viewName);
 
-        StartPageView startPageView = StartPageUseCaseFactory.create(viewManagerModel, startPageViewModel, recipePageViewModel, workoutViewModel, loginViewModel,signupViewModel );
+
+        StartPageView startPageView = StartPageUseCaseFactory.create(viewManagerModel, startPageViewModel, recipePageViewModel, workoutViewModel, loginViewModel,signupViewModel, calorieCounterViewModel );
+
         views.add(startPageView, startPageView.viewName);
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
@@ -75,6 +80,9 @@ public class Main {
 
         WorkoutView workoutView = new WorkoutView(workoutViewModel, viewManagerModel, startPageViewModel, searchByMuscleViewModel, searchWorkoutByNameViewModel);
         views.add(workoutView, workoutView.viewName);
+
+        CalorieCounterView calorieCounterView = CalorieCounterUseCaseFactory.create(viewManagerModel, calorieCounterViewModel, startPageViewModel, application);
+        views.add(calorieCounterView, calorieCounterView.viewName);
 
         SearchByMuscleView searchByMuscleView = SearchByMuscleUseCaseFactory.create(searchByMuscleViewModel, workoutViewModel, viewManagerModel, application);
         views.add(searchByMuscleView, searchByMuscleView.viewName);

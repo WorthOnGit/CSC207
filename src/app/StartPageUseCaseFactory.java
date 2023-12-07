@@ -1,5 +1,6 @@
 package app;
 
+import interface_adapter.CalorieCounter.CalorieCounterViewModel;
 import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.*;
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
@@ -18,9 +19,11 @@ public class StartPageUseCaseFactory {
     private StartPageUseCaseFactory() {}
 
     public static StartPageView create(
+
             ViewManagerModel viewManagerModel, StartPageViewModel StartPageViewModel, RecipePageViewModel signupViewModel, WorkoutViewModel workoutViewModel, LoginViewModel loginViewModel, SignupViewModel viewModel) {
         RecipeSearchController RecipeSearchController = createcontroller(viewManagerModel, signupViewModel);
-        return new StartPageView(StartPageViewModel, RecipeSearchController, workoutViewModel, loginViewModel, viewManagerModel, viewModel);
+        return new StartPageView(StartPageViewModel, RecipeSearchController, workoutViewModel, loginViewModel, viewManagerModel, viewModel, calorieCounterViewModel);
+
 
     }
 

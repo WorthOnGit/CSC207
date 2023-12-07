@@ -4,12 +4,15 @@ import interface_adapter.StartPage.RecipePageButton.RecipeSearchController;
 import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.Workout.WorkoutViewModel;
+
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
 import use_case.login.LoginInputData;
+import interface_adapter.CalorieCounter.CalorieCounterViewModel;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,6 +60,7 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
         button1.remove(sign_up);
         button1.remove(login);
 
+
         if (username == null || username.isEmpty()) {
             button1.add(sign_up);
             button1.add(login);
@@ -69,7 +73,9 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
     LoginViewModel loginViewModel;
     ViewManagerModel viewManagerModel;
 
-    public StartPageView(StartPageViewModel signupViewModel, interface_adapter.StartPage.RecipePageButton.RecipeSearchController recipeSearchController, WorkoutViewModel workoutViewModel, LoginViewModel loginViewModel, ViewManagerModel viewManagerModel, SignupViewModel signupViewModel1) {
+    public StartPageView(StartPageViewModel signupViewModel, interface_adapter.StartPage.RecipePageButton.RecipeSearchController recipeSearchController, WorkoutViewModel workoutViewModel, LoginViewModel loginViewModel, 
+                         ViewManagerModel viewManagerModel, SignupViewModel signupViewModel1, CalorieCounterViewModel calorieCounterViewModel) {
+
         this.StartPageViewModel = signupViewModel;
         this.RecipeSearchController = recipeSearchController;
         this.loginViewModel = loginViewModel;
@@ -184,7 +190,8 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(calorie_count)) {
-                        }
+                            viewManagerModel.setActiveView(calorieCounterViewModel.getViewName());
+                            viewManagerModel.firePropertyChanged();}
 
                     }
                 }
