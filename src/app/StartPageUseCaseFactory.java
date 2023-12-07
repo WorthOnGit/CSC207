@@ -20,7 +20,7 @@ public class StartPageUseCaseFactory {
 
     public static StartPageView create(
 
-            ViewManagerModel viewManagerModel, StartPageViewModel StartPageViewModel, RecipePageViewModel signupViewModel, WorkoutViewModel workoutViewModel, LoginViewModel loginViewModel, SignupViewModel viewModel) {
+            ViewManagerModel viewManagerModel, StartPageViewModel StartPageViewModel, RecipePageViewModel signupViewModel, WorkoutViewModel workoutViewModel, LoginViewModel loginViewModel, SignupViewModel viewModel, CalorieCounterViewModel calorieCounterViewModel) {
         RecipeSearchController RecipeSearchController = createcontroller(viewManagerModel, signupViewModel);
         return new StartPageView(StartPageViewModel, RecipeSearchController, workoutViewModel, loginViewModel, viewManagerModel, viewModel, calorieCounterViewModel);
 
