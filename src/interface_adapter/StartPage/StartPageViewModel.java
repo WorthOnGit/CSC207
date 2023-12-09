@@ -14,7 +14,7 @@ public class StartPageViewModel extends ViewModel {
 
     public static final String plan_meal_BUTTON_LABEL = "Plan Meal";
 
-    public static final String view_saved_BUTTON_LABEL = "View Saved Recipe";
+    public static final String view_saved_BUTTON_LABEL = "Saved Recipes";
 
     public static final String Calorie_counter_BUTTON_LABEL = "Calorie Counter";
 

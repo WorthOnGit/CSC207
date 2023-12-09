@@ -28,8 +28,14 @@ public class Main {
         // Build the main program window, the main panel containing the
         // various cards, and the layout, and stitch them together.
 
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         // The main application window.
-        JFrame application = new JFrame("Meal Planner");
+        JFrame application = new JFrame("Fitness App");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
@@ -66,6 +72,9 @@ public class Main {
 
 
         StartPageView startPageView = StartPageUseCaseFactory.create(viewManagerModel, startPageViewModel, recipePageViewModel, workoutViewModel, loginViewModel,signupViewModel, calorieCounterViewModel );
+
+        startPageView.setBackground(Color.BLACK);
+
 
         views.add(startPageView, startPageView.viewName);
 

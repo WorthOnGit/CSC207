@@ -26,226 +26,160 @@ import java.io.RandomAccessFile;
 public class StartPageView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "start page";
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        LoginState currentState = loginViewModel.getState();
-
-        String username = currentState.getUsername();
-        usernameLabel.setText(username);
-
-    }
-
-    private final StartPageViewModel StartPageViewModel;
-    private final RecipeSearchController RecipeSearchController;
-    private final JButton recipe_search;
+    private final StartPageViewModel startPageViewModel;
+    private final RecipeSearchController recipeSearchController;
+    private final JButton recipeSearchButton;
     private final JLabel usernameLabel;
-    private final JButton plan_meal;
-    private final JButton view_saved_rec;
+    private final JButton planMealButton;
+    private final JButton viewSavedRecipesButton;
+    private final JButton workoutSearchButton;
+    private final JButton calorieCounterButton;
+    private final JButton signUpButton;
+    private final JButton loginButton;
+    private final JButton userScreenButton;
 
-    private final JButton workout_search;
+    private final LoginViewModel loginViewModel;
 
-    private final JButton calorie_count;
+    private boolean addedToWindow = false;
 
-    private final JButton sign_up;
+    public StartPageView(StartPageViewModel startPageViewModel, RecipeSearchController recipeSearchController,
+                         WorkoutViewModel workoutViewModel, LoginViewModel loginViewModel,
+                         ViewManagerModel viewManagerModel, SignupViewModel signupViewModel,
+                         CalorieCounterViewModel calorieCounterViewModel) {
 
-    private final JButton login, userScreen;
-//    private final LoginController loginController;
-
-    JPanel button1 = new JPanel();
-    JPanel button2 = new JPanel();
-
-    private void initializeAndAddButtons() {
-        String username = this.viewManagerModel.getLoggedInUsername(); // Adjust this based on how you get the username
-        button1.remove(sign_up);
-        button1.remove(login);
-
-
-        if (username == null || username.isEmpty()) {
-            button1.add(sign_up);
-            button1.add(login);
-        }
-
-        button1.revalidate();
-        button1.repaint();
-    }
-
-    LoginViewModel loginViewModel;
-    ViewManagerModel viewManagerModel;
-
-    public StartPageView(StartPageViewModel signupViewModel, interface_adapter.StartPage.RecipePageButton.RecipeSearchController recipeSearchController, WorkoutViewModel workoutViewModel, LoginViewModel loginViewModel, 
-                         ViewManagerModel viewManagerModel, SignupViewModel signupViewModel1, CalorieCounterViewModel calorieCounterViewModel) {
-
-        this.StartPageViewModel = signupViewModel;
-        this.RecipeSearchController = recipeSearchController;
         this.loginViewModel = loginViewModel;
-        this.viewManagerModel = viewManagerModel;
+        this.startPageViewModel = startPageViewModel;
+        this.recipeSearchController = recipeSearchController;
 
-        this.loginViewModel.addPropertyChangeListener(this);
-        this.StartPageViewModel.addPropertyChangeListener(this);
+        this.startPageViewModel.addPropertyChangeListener(this);
 
-
-        JLabel title = new JLabel(StartPageViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-
-        JPanel buttons = new JPanel();
-        // Image panel in the center
-        JPanel imagePanel = new JPanel();
-        ImageIcon imageIcon = new ImageIcon("src/studio_logo_5474_delhi.png");
-        Image scaledImage = imageIcon.getImage().getScaledInstance(1500, 600, Image.SCALE_SMOOTH);
-        ImageIcon scaledImageIcon = new ImageIcon(scaledImage);
-        JLabel imageLabel = new JLabel(scaledImageIcon);
-        imagePanel.add(imageLabel);
-        /*
-        // Image panel in the center
-        JPanel imagePanel = new JPanel();
-        ImageIcon imageIcon = new ImageIcon("C:\\Users\\muaawiz\\IdeaProjects\\CSC207Muaawiz\\src\\kong-fitness-logo-by-collin-bigart-dribbble.png");
-        Image scaledImage = imageIcon.getImage().getScaledInstance(400, 300, Image.SCALE_SMOOTH);
-        ImageIcon scaledImageIcon = new ImageIcon(scaledImage);
-        JLabel imageLabel = new JLabel(scaledImageIcon);
-        imagePanel.add(imageLabel);
-*/
-
-        recipe_search = new JButton(StartPageViewModel.recipe_search_BUTTON_LABEL);
-        recipe_search.setPreferredSize(new Dimension(200, 100));
-        button1.add(recipe_search);
-      /* I believe there is a bug in this commented code
-        plan_meal = new JButton(interface_adapter.StartPage.StartPageViewModel.plan_meal_BUTTON_LABEL);
-        buttons.add(plan_meal);
-
-        recipe_search.setPreferredSize(new Dimension(200, 100));
-        buttons.add(recipe_search);
-    */
-        plan_meal = new JButton(StartPageViewModel.plan_meal_BUTTON_LABEL);
-        plan_meal.setPreferredSize(new Dimension(200, 100));
-        button1.add(plan_meal);
-
-        view_saved_rec = new JButton(StartPageViewModel.view_saved_BUTTON_LABEL);
-        view_saved_rec.setPreferredSize(new Dimension(200, 100));
-        button1.add(view_saved_rec);
+        JLabel title = new JLabel(startPageViewModel.TITLE_LABEL);
+        title.setFont(new Font("Arial", Font.BOLD, 24));
+        title.setHorizontalAlignment(SwingConstants.CENTER);
 
 
-        calorie_count = new JButton(StartPageViewModel.Calorie_counter_BUTTON_LABEL);
-        calorie_count.setPreferredSize(new Dimension(200, 100));
-        button2.add(calorie_count);
+        recipeSearchButton = createStyledButton(startPageViewModel.recipe_search_BUTTON_LABEL, "src/rsearch.png");
+        planMealButton = createStyledButton(startPageViewModel.plan_meal_BUTTON_LABEL, "src/planm.png");
+        viewSavedRecipesButton = createStyledButton(startPageViewModel.view_saved_BUTTON_LABEL, "src/savedr.png");
+        workoutSearchButton = createStyledButton(startPageViewModel.Workout_BUTTON_LABEL, "src/worko.png");
+        calorieCounterButton = createStyledButton(startPageViewModel.Calorie_counter_BUTTON_LABEL, "src/calk.png");
+        signUpButton = createStyledButton(startPageViewModel.sign_up_BUTTON_LABEL, "src/signu.png");
+        loginButton = createStyledButton(startPageViewModel.login_BUTTON_LABEL, "src/login.png");
+        usernameLabel = new JLabel(startPageViewModel.username_Button_Label);
+        userScreenButton = createStyledButton(startPageViewModel.USER_SCREEN_BUTTON_LABEL, "src/user.png");
 
-        workout_search = new JButton(StartPageViewModel.Workout_BUTTON_LABEL);
-        workout_search.setPreferredSize(new Dimension(200, 100));
-        button2.add(workout_search);
-
-        sign_up = new JButton(StartPageViewModel.sign_up_BUTTON_LABEL);
-        userScreen = new JButton(StartPageViewModel.USER_SCREEN_BUTTON_LABEL);
-        button1.add(userScreen);
-
-        login = new JButton(StartPageViewModel.login_BUTTON_LABEL);
-        usernameLabel = new JLabel(StartPageViewModel.username_Button_Label);
-        button2.add(usernameLabel);
-
-        signupViewModel.addPropertyChangeListener(this);
-        initializeAndAddButtons();
-
-        userScreen.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                viewManagerModel.setActiveView("logged in");
-                viewManagerModel.firePropertyChanged();
-
-
-            }
+        // Add action listeners
+        userScreenButton.addActionListener(e -> {
+            viewManagerModel.setActiveView("logged in");
+            viewManagerModel.firePropertyChanged();
         });
-        view_saved_rec.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                readLatestRecipeData();
-            }
+
+        viewSavedRecipesButton.addActionListener(e -> readLatestRecipeData());
+
+        recipeSearchButton.addActionListener(e -> recipeSearchController.execute());
+
+        calorieCounterButton.addActionListener(e -> {
+            viewManagerModel.setActiveView(calorieCounterViewModel.getViewName());
+            viewManagerModel.firePropertyChanged();
         });
-        recipe_search.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(recipe_search)) {
-                            RecipeSearchController.execute();
 
-                        }
+        signUpButton.addActionListener(e -> {
+            viewManagerModel.setActiveView(signupViewModel.getViewName());
+            viewManagerModel.firePropertyChanged();
+        });
 
-                    }
-                }
-        );
+        loginButton.addActionListener(e -> {
+            viewManagerModel.setActiveView(loginViewModel.getViewName());
+            viewManagerModel.firePropertyChanged();
+        });
 
-        plan_meal.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(plan_meal)) {
+        workoutSearchButton.addActionListener(e -> {
+            viewManagerModel.setActiveView(workoutViewModel.getViewName());
+            viewManagerModel.firePropertyChanged();
+        });
 
-                        }
-                    }
-                }
-        );
-
-        calorie_count.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (e.getSource().equals(calorie_count)) {
-                            viewManagerModel.setActiveView(calorieCounterViewModel.getViewName());
-                            viewManagerModel.firePropertyChanged();}
-
-                    }
-                }
-        );
-        // write a method that shows my signup page
-
-
-        sign_up.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (e.getSource().equals(sign_up)) {
-                            viewManagerModel.setActiveView(signupViewModel1.getViewName());
-                            viewManagerModel.firePropertyChanged();
-
-                        }
-                    }
-                }
-        );
-
-        login.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (e.getSource().equals(login)) {
-                            viewManagerModel.setActiveView(loginViewModel.getViewName());
-                            viewManagerModel.firePropertyChanged();
-                        }
-                    }
-                }
-        );
-
-        workout_search.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (e.getSource().equals(workout_search)) {
-                            viewManagerModel.setActiveView(workoutViewModel.getViewName());
-                            System.out.println("Workout button clicked" + workoutViewModel.getViewName());
-                            viewManagerModel.firePropertyChanged();
-                        }
-
-                    }
-                }
-        );
-
+        JPanel buttonPanel1 = createButtonPanel(signUpButton, loginButton, userScreenButton);
+        JPanel buttonPanel2 = createButtonPanel(planMealButton, recipeSearchButton, viewSavedRecipesButton);
+        JPanel buttonPanel3 = createButtonPanel(workoutSearchButton, calorieCounterButton);
 
         this.setLayout(new BorderLayout());
-
         this.add(title, BorderLayout.NORTH);
-        this.add(imagePanel, BorderLayout.CENTER);
-        this.add(button1, BorderLayout.NORTH);
-        this.add(button2, BorderLayout.SOUTH);
+        this.add(buttonPanel1, BorderLayout.NORTH);
+        this.add(buttonPanel2, BorderLayout.CENTER);
+        this.add(buttonPanel3, BorderLayout.SOUTH);
+
+        // Apply shadow or gradient if needed
+
+        // Set the background color of the panel
+        if (SwingUtilities.getWindowAncestor(this) instanceof JFrame) {
+            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            Container contentPane = frame.getContentPane();
+            contentPane.setBackground(Color.BLACK);
+            if (contentPane instanceof JPanel) {
+                JPanel mainPanel = (JPanel) contentPane;
+                mainPanel.setBackground(Color.BLACK);
+            }
+        }
+
     }
+
+    private JButton createStyledButton(String text, String iconPath) {
+        ImageIcon icon = new ImageIcon(new ImageIcon(iconPath).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+
+        // Create a panel to hold the icon and text using GridBagLayout
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+
+        // Add the icon to the panel
+        JLabel iconLabel = new JLabel(icon);
+        panel.add(iconLabel, gbc);
+
+        // Increment the row for the text
+        gbc.gridy++;
+
+        // Add the text to the panel with CENTER alignment
+        JLabel textLabel = new JLabel(text);
+        textLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(textLabel, gbc);
+
+        // Create a button with the panel as its component
+        JButton button = new JButton();
+        button.setLayout(new BorderLayout());
+        button.add(panel, BorderLayout.CENTER);
+
+        // Customize button appearance
+        button.setFont(new Font("Arial", Font.BOLD, 18));
+        button.setForeground(Color.WHITE); // White text
+        button.setFocusPainted(false); // Remove the focus border
+        button.setBorderPainted(false); // Remove the border
+        button.setPreferredSize(new Dimension(150, 150)); // Adjust size as needed
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Change cursor on hover
+
+        // Adjusted foreground color for better visibility
+        button.setForeground(new Color(0, 0, 0)); // White text
+
+        // Add padding
+        button.setMargin(new Insets(10, 10, 10, 10));
+
+        // Apply shadow or gradient if needed
+
+        return button;
+    }
+
+
+    private JPanel createButtonPanel(JButton... buttons) {
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 50)); // Increased gaps
+
+        for (JButton button : buttons) {
+            buttonPanel.add(button);
+        }
+
+        return buttonPanel;
+    }
+
 
     /**
      * React to a button click that results in evt.

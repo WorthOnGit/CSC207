@@ -93,12 +93,6 @@ public class RecipeSeatchButtonPresenter implements RecipeSearchButtonOutputBoun
                 options,
                 options[0]
         );
-
-
-        // Set the preferred size for the content panel
-//        contentPanel.setPreferredSize(new Dimension(800, 500));
-
-//        JOptionPane.showMessageDialog(null, contentPanel, "Recipe Details", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void addLabelAndDetails(JPanel panel, GridBagConstraints gbc, String label, String details) {

@@ -36,9 +36,13 @@ public class RecipeSearchUseCaseFactory {
 
         RecipeSearchButtonController searchcontroller = createSearchcontroller(view);
 
-        return new RecipePageView(recipePageViewModel, controller, searchcontroller);
+        // Assuming backgroundImagePath is a placeholder. Replace it with the actual path.
+        String backgroundImagePath = "src/rback.jpeg";
 
+        // Pass the backgroundImagePath parameter to the RecipePageView constructor.
+        return new RecipePageView(recipePageViewModel, controller, searchcontroller, backgroundImagePath);
     }
+
 
     private static RecipeDoneController createcontroller(ViewManagerModel viewManagerModel, StartPageViewModel startpageViewModel, RecipePageViewModel recipePageViewModel) {
 
