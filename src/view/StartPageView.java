@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.StartPage.RecipePageButton.RecipeSearchController;
+import interface_adapter.StartPage.MealPlannerPageButton.MealPlannerController;
 import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.StartPage.StartPageState;
 import interface_adapter.ViewManagerModel;
@@ -18,6 +19,7 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
 
     private final StartPageViewModel StartPageViewModel;
     private final RecipeSearchController RecipeSearchController;
+    private final MealPlannerController MealPlannerController;
     private final JButton recipe_search;
     private final JButton plan_meal;
 
@@ -30,9 +32,10 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
     private final JButton login;
 
 
-    public StartPageView(StartPageViewModel signupViewModel, interface_adapter.StartPage.RecipePageButton.RecipeSearchController recipeSearchController, WorkoutViewModel workoutViewModel, ViewManagerModel viewManagerModel) {
+    public StartPageView(StartPageViewModel signupViewModel, interface_adapter.StartPage.RecipePageButton.RecipeSearchController recipeSearchController,interface_adapter.StartPage.MealPlannerPageButton.MealPlannerController mealplannercontroller , WorkoutViewModel workoutViewModel, ViewManagerModel viewManagerModel) {
         this.StartPageViewModel = signupViewModel;
         this.RecipeSearchController = recipeSearchController;
+        this.MealPlannerController=mealplannercontroller;
         signupViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(StartPageViewModel.TITLE_LABEL);
@@ -96,7 +99,7 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(plan_meal)) {
-
+                            MealPlannerController.execute();
                         }
                     }
                 }
