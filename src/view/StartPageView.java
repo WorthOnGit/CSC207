@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.StartPage.RecipePageButton.RecipeSearchController;
+import interface_adapter.StartPage.MealPlannerPageButton.MealPlannerController;
 import interface_adapter.StartPage.StartPageViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.Workout.WorkoutViewModel;
@@ -38,6 +39,7 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
 
     private final StartPageViewModel StartPageViewModel;
     private final RecipeSearchController RecipeSearchController;
+    private final MealPlannerController MealPlannerController;
     private final JButton recipe_search;
     private final JLabel usernameLabel;
     private final JButton plan_meal;
@@ -76,13 +78,6 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
     public StartPageView(StartPageViewModel signupViewModel, interface_adapter.StartPage.RecipePageButton.RecipeSearchController recipeSearchController, WorkoutViewModel workoutViewModel, LoginViewModel loginViewModel, 
                          ViewManagerModel viewManagerModel, SignupViewModel signupViewModel1, CalorieCounterViewModel calorieCounterViewModel) {
 
-        this.StartPageViewModel = signupViewModel;
-        this.RecipeSearchController = recipeSearchController;
-        this.loginViewModel = loginViewModel;
-        this.viewManagerModel = viewManagerModel;
-
-        this.loginViewModel.addPropertyChangeListener(this);
-        this.StartPageViewModel.addPropertyChangeListener(this);
 
 
         JLabel title = new JLabel(StartPageViewModel.TITLE_LABEL);
@@ -179,7 +174,7 @@ public class StartPageView extends JPanel implements ActionListener, PropertyCha
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(plan_meal)) {
-
+                            MealPlannerController.execute();
                         }
                     }
                 }
