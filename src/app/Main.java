@@ -2,6 +2,7 @@ package app;
 
 import DataAccess.FileUserDataAccessObject;
 import entity.CommonUserFactory;
+import interface_adapter.CalorieCounter.CalorieCounterViewModel;
 import interface_adapter.RecipePageViewModel.RecipePageViewModel;
 import interface_adapter.MealPlannerPageViewModel.MealPlannerViewModel;
 import interface_adapter.SearchByMuscle.SearchByMuscleViewModel;
@@ -38,9 +39,7 @@ public class Main {
 
         StartPageViewModel startPageViewModel = new StartPageViewModel();
         RecipePageViewModel recipePageViewModel = new RecipePageViewModel();
-        
-        MealPlannerViewModel mealPlannerViewModel=new MealPlannerViewModel();
-        
+
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
@@ -58,14 +57,7 @@ public class Main {
 
         RecipePageView recipePageView = RecipeSearchUseCaseFactory.create(viewManagerModel, recipePageViewModel, startPageViewModel, application);
         views.add(recipePageView, recipePageView.viewName);
-    
-        
-        MealPlannerPageView mealPlannerPageView= MealPlannerUseCaseFactory.create(viewManagerModel,  mealPlannerViewModel, startPageViewModel, application);
-        views.add(mealPlannerPageView,mealPlannerPageView.viewName);
 
-    
-    /* cehck this linen maybe some errrorrr   */
-        StartPageView startPageView = StartPageUseCaseFactory.create(viewManagerModel, startPageViewModel, recipePageViewModel,mealPlannerViewModel ,workoutViewModel);
         views.add(startPageView, startPageView.viewName);
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
@@ -74,11 +66,14 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
+        LoggedInView loggedInView = new LoggedInView(viewManagerModel, loggedInViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
         WorkoutView workoutView = new WorkoutView(workoutViewModel, viewManagerModel, startPageViewModel, searchByMuscleViewModel, searchWorkoutByNameViewModel);
         views.add(workoutView, workoutView.viewName);
+
+        CalorieCounterView calorieCounterView = CalorieCounterUseCaseFactory.create(viewManagerModel, calorieCounterViewModel, startPageViewModel, application);
+        views.add(calorieCounterView, calorieCounterView.viewName);
 
         SearchByMuscleView searchByMuscleView = SearchByMuscleUseCaseFactory.create(searchByMuscleViewModel, workoutViewModel, viewManagerModel, application);
         views.add(searchByMuscleView, searchByMuscleView.viewName);

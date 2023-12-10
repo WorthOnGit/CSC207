@@ -34,7 +34,7 @@ public class WorkoutView extends JPanel implements ActionListener, PropertyChang
 
         JPanel imagePanel = new JPanel();
         ImageIcon imageIcon = new ImageIcon("C:\\Users\\muaawiz\\IdeaProjects\\CSC207Muaawiz\\src\\studio_logo_5474_delhi.png");
-        Image scaledImage = imageIcon.getImage().getScaledInstance(400, 300, Image.SCALE_SMOOTH);
+        Image scaledImage = imageIcon.getImage().getScaledInstance(600, 600, Image.SCALE_SMOOTH);
         ImageIcon scaledImageIcon = new ImageIcon(scaledImage);
         JLabel imageLabel = new JLabel(scaledImageIcon);
         imagePanel.add(imageLabel);
@@ -42,14 +42,14 @@ public class WorkoutView extends JPanel implements ActionListener, PropertyChang
         JPanel buttons = new JPanel();
 
         Search_muscle_group = new JButton(workoutViewModel.muscle_search_BUTTON_LABEL);
-        Search_muscle_group.setPreferredSize(new Dimension(200, 100));
+        Search_muscle_group.setPreferredSize(new Dimension(400, 200));
         buttons.add(Search_muscle_group);
 
         Search_workout = new JButton(workoutViewModel.Workout_BUTTON_LABEL);
-        Search_workout.setPreferredSize(new Dimension(200, 100));
+        Search_workout.setPreferredSize(new Dimension(400, 200));
         buttons.add(Search_workout);
 
-        cancel.setPreferredSize(new Dimension(200, 100));
+        cancel.setPreferredSize(new Dimension(400, 200));
 
         buttons.add(cancel);
 
@@ -97,8 +97,8 @@ public class WorkoutView extends JPanel implements ActionListener, PropertyChang
         this.setLayout(new BorderLayout());
 
         this.add(title, BorderLayout.NORTH);
-        this.add(imagePanel, BorderLayout.CENTER);
-        this.add(buttons, BorderLayout.SOUTH);
+        this.add(imagePanel, BorderLayout.NORTH);
+        this.add(buttons, BorderLayout.CENTER);
     }
 
     /**

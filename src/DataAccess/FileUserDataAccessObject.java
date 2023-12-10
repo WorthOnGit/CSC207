@@ -23,7 +23,6 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
 
     public FileUserDataAccessObject(String csvPath, UserFactory userFactory) throws IOException {
         this.userFactory = userFactory;
-
         csvFile = new File(csvPath);
         headers.put("username", 0);
         headers.put("password", 1);
@@ -88,6 +87,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
 
     /**
      * Return whether a user exists with username identifier.
+     *
      * @param identifier the username to check.
      * @return whether a user exists with username identifier
      */
