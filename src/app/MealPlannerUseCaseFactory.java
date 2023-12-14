@@ -50,7 +50,7 @@ public class MealPlannerUseCaseFactory {
 }
     
   private static MealPlannerController createcontroller(ViewManagerModel viewManagerModel, StartPageViewModel startpageViewModel, MealPlannerViewModel mealPlannerViewModel) {
-  MealPlannerDoneOutputBoundary mealPlannercancelPresenter=new MealPlannerPresenter(viewManagerModel,startpageViewModel);
+  MealPlannerDoneOutputBoundary mealPlannercancelPresenter=new MealPlannerPresenter(viewManagerModel,mealPlannerViewModel);
   MealPlannerDoneInputBoundary  mealPlannercancelusecaseInteractor=new MealPlannerDoneInteractor(mealPlannercancelPresenter,mealPlannerViewModel,mealPlannerViewModel);  
   return new MealPlannerController(mealPlannercancelusecaseInteractor);
   

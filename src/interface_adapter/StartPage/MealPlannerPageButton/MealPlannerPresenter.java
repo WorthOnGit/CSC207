@@ -14,12 +14,12 @@ import interface_adapter.MealPlannerPageViewModel.MealPlannerViewModel;
  */
 public class MealPlannerPresenter implements MealPlannerSearchOutputBoundary{
    private final ViewManagerModel viewManagerModel;
-    private final MealPlannerViewModel mealPlannerViewModel;
+   private final MealPlannerViewModel mealPlannerViewModel;
     
  
-    public MealPlannerPresenter(ViewManagerModel viewManagerModel, MealPlannerViewModel signupViewModel) {
+    public MealPlannerPresenter(ViewManagerModel viewManagerModel, MealPlannerViewModel mealPlannerViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.mealPlannerViewModel = signupViewModel;
+        this.mealPlannerViewModel = mealPlannerViewModel;
     }
     
     @Override

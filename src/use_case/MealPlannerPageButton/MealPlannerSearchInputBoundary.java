@@ -9,5 +9,6 @@ package use_case.MealPlannerPageButton;
  * @author Lenovo
  */
 public interface MealPlannerSearchInputBoundary {
+
      void execute();
 }

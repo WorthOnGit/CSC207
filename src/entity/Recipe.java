@@ -165,9 +165,11 @@ public class Recipe {
                     result.append(lines[i]);
                 }
             }
+            System.out.println(result.toString());
             return result.toString();
         } else {
             // Handle the case where the recipe is too short
+            System.out.println("Ingredients Not Available");
             return "Ingredients Not Available";
         }
 
