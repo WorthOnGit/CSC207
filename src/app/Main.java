@@ -53,6 +53,7 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        CalorieCounterViewModel calorieCounterViewModel = new CalorieCounterViewModel();
         WorkoutViewModel workoutViewModel = new WorkoutViewModel();
         SearchByMuscleViewModel searchByMuscleViewModel = new SearchByMuscleViewModel();
         SearchWorkoutByNameViewModel searchWorkoutByNameViewModel = new SearchWorkoutByNameViewModel();
@@ -83,6 +84,9 @@ public class Main {
 
         SearchByMuscleView searchByMuscleView = SearchByMuscleUseCaseFactory.create(searchByMuscleViewModel, workoutViewModel, viewManagerModel, application);
         views.add(searchByMuscleView, searchByMuscleView.viewName);
+
+        CalorieCounterView calorieCounterView = CalorieCounterUseCaseFactory.create(viewManagerModel, calorieCounterViewModel, startPageViewModel, application);
+        views.add(calorieCounterView, calorieCounterView.viewName);
 
         SearchWorkoutByNameView searchWorkoutByNameView = SearchWorkoutByNameUseCaseFactory.create(searchWorkoutByNameViewModel, viewManagerModel, workoutViewModel, application);
         views.add(searchWorkoutByNameView, searchWorkoutByNameView.viewName);
